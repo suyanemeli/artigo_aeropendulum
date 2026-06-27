@@ -1,0 +1,13 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/c:\\Users\\Suyane Melissa\\Downloads\\Article_aeropendulum\\sn-article.aux": true,
+        "**/c:\\Users\\Suyane Melissa\\Downloads\\Article_aeropendulum\\sn-article.log": true,
+        "**/c:\\Users\\Suyane Melissa\\Downloads\\Article_aeropendulum\\sn-article.gz": true,
+        "**/c:\\Users\\Suyane Melissa\\Downloads\\Article_aeropendulum\\sn-article.out": true
+    }
+}
