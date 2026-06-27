@@ -237,13 +237,25 @@ G(s) = \frac{\Theta(s)}{T_{m1}(s) - T_{m2}(s)} = \frac{1}{J s^2 + b s + K_g}
 
 \section{Experimental platform and parameter identification}
 
-To evaluate the mathematical formulations and validate the proposed control strategies, a dedicated experimental testbed was developed and utilized in this work. The physical apparatus consists of a twin-rotor aeropendulum framework, illustrated in Fig.~\ref{fig:aeropendulum_photo}, designed for the study and benchmark of non-linear control techniques.
+To evaluate the mathematical formulations and validate the proposed control strategies, a dedicated experimental testbed was developed and utilized in this work. The physical apparatus consists of a twin-rotor aeropendulum framework, illustrated in Fig.~\ref{fig:aeropendulum_combined}, designed for the study and benchmark of non-linear control techniques.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.35\textwidth]{pendulo-ma.eps} % Substitua pelo nome do seu arquivo da Figura 6
-    \caption{General physical structure of the twin-rotor aeropendulum experimental platform.}
-    \label{fig:aeropendulum_photo}
+    \begin{subfigure}{0.265\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pendulum-front.eps}
+        \caption{Front view.}
+        \label{fig:aeropendulum_front}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pendulum-lateral.eps}
+        \caption{Side view.}
+        \label{fig:aeropendulum_side}
+    \end{subfigure}
+    \caption{The developed twin-rotor aeropendulum experimental platform from front and side perspectives.}
+    \label{fig:aeropendulum_combined}
 \end{figure}
 
 The mechanical assembly isolates the plant's movement to a single rotational degree of freedom within the vertical plane. The main structural components, geometric constraints, and the instrumentation infrastructure are detailed below.
@@ -251,32 +263,46 @@ The mechanical assembly isolates the plant's movement to a single rotational deg
 \subsection{Mechanical and Hardware Architecture}
 \label{sub:hardware}
 
-The structural support consists of a rigid frame that holds the primary rotational shaft. To minimize frictional losses and guarantee that the plant dynamics are predominantly driven by the active aerodynamic inputs, the mechanical assembly is coupled to the fixed frame through low-friction bearings. The dimensional design of the prototype is depicted in Fig.~\ref{fig:technical_drawing}.
+The structural support consists of a rigid frame that holds the primary rotational shaft. To minimize frictional losses and guarantee that the plant dynamics are predominantly driven by the active aerodynamic inputs, the mechanical assembly is coupled to the fixed frame through low-friction bearings. 
 
 The primary physical and operational characteristics of the embedded subsystems are defined as follows:
 \begin{itemize}
     \item \textbf{Propulsion Subsystem:} Actuation is provided by two A2212/13T Brushless DC (BLDC) motors mounted back-to-back at the lower tip of a rigid aluminum rod ($L = 0.515\text{ m}$). Each motor is coupled to a $7\times4\times3$ polycarbonate tri-blade propeller. This assembly converts the digital control commands into active differential thrust forces perpendicular to the longitudinal axis of the rod.
-    \item \textbf{Processing and Control Unit:} The computational core is driven by an ATmega2560 8-bit microcontroller (Arduino Mega platform). This unit is responsible for executing the real-time digital filtering routines, processing the control laws, and generating the independent high-resolution Pulse Width Modulation (PWM) signals dispatched to the Electronic Speed Controllers (ESCs). The control loop runs at a fixed sampling period, and data communication with the host computer is established via a bidirectional USB/Serial interface.
-    \item \textbf{Sensors and Interface Subsystems:} The angular position $\theta(t)$ is acquired through a high-precision rotary potentiometer attached directly to the main pivot axis, selected due to its high linearity and noise immunity. For manual operational testing and setpoint tuning without an ungrounded graphical user interface, an analog joystick module was integrated into the electronic bus.
+    \item \textbf{Processing and Control Unit:} The computational core is driven by an ATmega2560 microcontroller (Arduino Mega platform). This unit is responsible for executing the real-time digital filtering routines, processing the control laws, and generating the independent high-resolution Pulse Width Modulation (PWM) signals dispatched to the Electronic Speed Controllers (ESCs). The control loop runs at a fixed sampling period, and data communication with the host computer is established via a bidirectional USB/Serial interface.
+    \item \textbf{Sensors and Interface Subsystems:} The angular position $\theta(t)$ is acquired through a high-precision rotary potentiometer attached directly to the main pivot axis, selected due to its high linearity and noise immunity. 
     \item \textbf{Power Supply Unit:} To ensure voltage stability and satisfy the strict current demands during high-acceleration transients, the entire platform is powered by a regulated $10\text{ V}$, $30\text{ A}$ switched-mode power supply (SMPS).
+    \item \textbf{Supervisory and Graphical User Interface (GUI):} A dedicated telemetry and supervisory software system was developed to mediate the experimental verification procedures. Operating over the bidirectional serial communication channel, this graphical interface allows the real-time configuration of setpoints and control parameters while simultaneously logging the estimated variables, sensor measurements, and actuator efforts for post-processing and dynamic analysis.
 \end{itemize}
 
-\subsection{Lumped Parameter Verification}
-\label{sub:lumped_parameters}
+\subsection{System Parameter Identification}
+\label{sub:parameters}
 
-By crossing the physical dimensions from the technical specification with the nominal mass data ($m_{\text{haste}} = 0.210\text{ kg}$ and $m_{\text{motor}} = 0.053\text{ kg}$), the total mass concentrated at the application radius is established as $m_{\text{total}} = 0.316\text{ kg}$. Under standard gravity ($g = 9.81\text{ m/s}^2$), the lumped equivalent moment of inertia ($J$) and the gravitational stiffness gain ($K_g$), previously defined in Section 2, are analytically computed as:
+Based on the physical construction and geometric synthesis of the prototype, the core structural and dynamic variables of the system were successfully determined. The mass elements and physical lengths were measured directly from the experimental apparatus, while parameters such as the total mass moment of inertia ($I_{\text{total}}$) and the experimental rotational viscous damping coefficient ($b$) were obtained through analytical formulations and free-oscillation dynamic tests, respectively. 
 
-\begin{equation}
-J = L^{2}\left(\frac{1}{3}m_{\text{haste}} + 2m_{\text{motor}}\right) \approx 0.0234 \text{ kg}\cdot\text{m}^2
-\label{eq:numeric_J}
-\end{equation}
+The complete set of identified physical constants and operational parameters that govern the aeropendulum dynamics is consolidated in Table~\ref{tab:system_parameters}.
 
-\begin{equation}
-K_g = L m_{\text{total}} g \approx 1.596 \text{ N}\cdot\text{m/rad}
-\label{eq:numeric_Kg}
-\end{equation}
+\begin{table}[h]
+\caption{Physical and identified parameters of the developed aeropendulum platform}\label{tab:system_parameters}%
+\begin{center}
+\begin{minipage}{\columnwidth}
+\setlength{\tabcolsep}{6pt} % Ajusta o espaçamento entre colunas para o layout
+\footnotesize % Fonte padrão aceita pela Springer para tabelas compactas
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Unit} \\
+\midrule
+Motor mass ($m_1 = m_2$) & 0.052 & kg \\
+Rod mass ($m_{\text{haste}}$) & 0.100 & kg \\
+Total moment of inertia ($I_{\text{total}}$) & 0.0173 & kg$\cdot$m² \\
+Rotational viscous damping coefficient ($b$) & 0.3944 & N$\cdot$m$\cdot$s/rad \\
+Acceleration of gravity ($g$) & 9.8 & m/s² \\
+Rod length ($L$) & 0.36 & m \\
+\botrule
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
 
-To fully parameterize the dynamic model, the experimental calibration curves regarding the voltage-to-torque and current-to-PWM conversions—along with their respective linear regression fits—are addressed in the following subsections.
 
 \section{Input signal interpretation and actuation dynamics}\label{sec3}
 
@@ -401,385 +427,298 @@ This methodology successfully implements an indirect virtual current loop in sof
 
 \section{Control system design}\label{sec4}
 
+This work proposes and evaluates two distinct control paradigms to regulate the angular position of the twin-rotor aeropendulum: a classical Parallel Linear Proportional-Integral-Derivative (PID) controller and an intelligent hybrid Fuzzy-PID controller. Both architectures are independently implemented and compared under both voltage and virtual current actuation frameworks, mapping the performance boundaries of each combination.
+
+\subsection{Classical PID Control Design and Tuning}
+\label{sub:pid_design}
+
+The classical position control loop is structured around a parallel linear PID topology. The synthesis utilizes the open-loop transfer functions derived for current actuation ($G_1(s)$) and voltage actuation ($G_2(s)$), expressed as:
+
+\begin{equation}
+G_1(s) = \frac{\Theta(s)}{T_{m1}(s) - T_{m2}(s)} = \frac{K_t / I_{\text{total}}}{s^2 + \frac{b}{I_{\text{total}}}s + \frac{a}{I_{\text{total}}}}
+\label{eq:tf_current_literal}
+\end{equation}
+
+\begin{equation}
+G_2(s) = \frac{\Theta(s)}{V_1(s) - V_2(s)} = \frac{(K_1 + K_2) / I_{\text{total}}}{s^2 + \frac{b}{I_{\text{total}}}s + \frac{a}{I_{\text{total}}}}
+\label{eq:tf_voltage_literal}
+\end{equation}
+
+The characteristic polynomial of the linearized system yields two distinct, real negative poles. This overdamped operational profile meets the structural criteria for the classic open-loop S-curve Ziegler–Nichols (ZN) tuning methodology. To establish a baseline configuration, the plant was tuned under this criterion, yielding the initial controller parameters consolidated in Table~\ref{tab:pid_zn_base}.
+
+\begin{table}[h]
+\caption{Initial Ziegler–Nichols baseline parameters for the PID controller}\label{tab:pid_zn_base}%
+\begin{center}
+\begin{minipage}{\columnwidth}
+\setlength{\tabcolsep}{12pt}
+\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Control Framework} & $\mathbf{K_p}$ & $\mathbf{K_i}$ & $\mathbf{K_d}$ \\
+\midrule
+Voltage Proportional & 1.495 & 2.889 & 0.129 \\
+Virtual Current      & 0.641 & 0.155 & 0.664 \\
+\botrule
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+The direct digital deployment of the uncalibrated ZN baseline parameters resulted in a sluggish tracking response that failed to satisfy the transient criteria established for the physical platform (such as a settling time near $10\text{ s}$ and negligible overshoot). 
+
+To resolve this limitation and maximize trajectory robustness, a systematic empirical fine-tuning procedure was executed over the initial states. For the voltage control loop, a uniform multiplication factor was applied across all three parallel channels, where a tenfold increase ($\times 10$) optimized the rise time without triggering oscillatory degradation. Conversely, for the virtual current architecture, the low initial integral action induced severe steady-state settling delays; therefore, a selective multiplier ($\times 200$) was applied exclusively to the integral gain ($K_i$) to eliminate the permanent steady-state error. The final optimized operational gains are presented in Table~\ref{tab:pid_final_optimized}.
+
+\begin{table}[h]
+\caption{Final optimized parallel PID gains after empirical refinement}\label{tab:pid_final_optimized}%
+\begin{center}
+\begin{minipage}{\columnwidth}
+\setlength{\tabcolsep}{12pt}
+\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Control Framework} & $\mathbf{K_p}$ & $\mathbf{K_i}$ & $\mathbf{K_d}$ \\
+\midrule
+Voltage Proportional & 14.950 & 28.890 & 1.293 \\
+Virtual Current      & 0.641  & 31.000 & 0.664 \\
+\botrule
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+The necessity for these substantial empirical scaling factors over the analytical ZN baseline stems from unmodeled physical non-linearities and practical hardware constraints inherently absent in the linearized design models. First, the physical pivot mechanism exhibits non-linear static friction that introduces a deadband effect; the original, conservative ZN integral gains were insufficient to accumulate the tracking error fast enough to overcome this initial resistive torque, resulting in an excessively sluggish, dragged response. Second, the propulsion units introduce aerodynamic latency and actuator settling delays during transient thrust generation. In the voltage-driven configuration, a uniform amplification effectively counteracted the unmodeled dynamic attenuation of the ESC-motor-propeller subsystem. Conversely, within the virtual current loop framework, the current reference is mapped algebraically in software without active sensor feedback; thus, a highly aggressive integral scaling was required to accelerate the error accumulation, forcing the actuator to overcome both aerodynamic inertia and permanent steady-state offsets within the targeted operational settling time.
+
+\subsection{Adaptive Fuzzy-PID Control Design}
+\label{sub:fuzzy_pid}
+
+To enhance tracking robustness against parameter variations and unmodeled non-linear dynamics, an adaptive hybrid Fuzzy-PID controller is synthesized. Unlike classical structures with fixed parameters, the proposed architecture updates the proportional ($K_p$), integral ($K_i$), and derivative ($K_d$) gains in real-time. The block topology uses a Mamdani-type Fuzzy Inference System (FIS) acting as an online tuning mechanism over the nominal parallel baseline gains ($K_{p0}, K_{i0}, K_{d0}$) established in Table~\ref{tab:pid_final_optimized}. 
+
+The real-time adaptation mechanism is mathematically governed by three dimensionless multiplicative scaling vectors ($\alpha_p, \alpha_i, \alpha_d$), defined as follows:
+\begin{equation}
+K_p(t) = \alpha_p(t) \cdot K_{p0}
+\label{eq:fuzzy_kp}
+\end{equation}
+\begin{equation}
+K_i(t) = \alpha_i(t) \cdot K_{i0}
+\label{eq:fuzzy_ki}
+\end{equation}
+\begin{equation}
+K_d(t) = \alpha_d(t) \cdot K_{d0}
+\label{eq:fuzzy_kd}
+\end{equation}
+
+The FIS operates via two continuous crisp inputs: the tracking position error $e(t) = \theta_{\text{ref}}(t) - \theta(t)$ and its discrete finite-difference derivative $\dot{e}(t)$. Both input domains are mapped into three linguistic variables: Negativo (N), Zero (Z), and Positivo (P). The internal cross-coupled heuristic knowledge base consists of 9 linguistic IF-THEN rules deduced empirically from simulation behaviors, structured to minimize oscillations while accelerating transient recovery. The unifom rule base is consolidated in Table~\ref{tab:fuzzy_rules}.
+
+\begin{table}[h]
+\caption{Heuristic rule base for the adaptive Fuzzy-PID inference system}\label{tab:fuzzy_rules}%
+\begin{center}
+\begin{minipage}{\columnwidth}
+\setlength{\tabcolsep}{12pt}
+\footnotesize
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Error ($e$)} & \textbf{Derivative ($\dot{e}$)} & $\mathbf{\alpha_p}$ & $\mathbf{\alpha_i}$ & $\mathbf{\alpha_d}$ \\
+\midrule
+Negativo & Negativo & Médio & Baixo & Alto \\
+Negativo & Zero     & Médio & Médio & Médio \\
+Negativo & Positivo & Médio & Baixo & Alto \\
+Zero     & Negativo & Baixo & Médio & Alto \\
+Zero     & Zero     & Médio & Médio & Médio \\
+Zero     & Positivo & Baixo & Médio & Alto \\
+Positivo & Negativo & Médio & Baixo & Alto \\
+Positivo & Zero     & Médio & Médio & Médio \\
+Positivo & Positivo & Médio & Baixo & Alto \\
+\botrule
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+To balance computational efficiency and smooth interpolation boundaries across the operational space, four-parameter trapezoidal membership functions $\mu(x) = [x_1, x_2, x_3, x_4]$ are implemented for the output channels. The physical constraints and explicit boundary coordinates assigned to each linguistic output region are summarized in Table~\ref{tab:membership_parameters}.
+
+\begin{table}[h]
+\caption{Membership function coordinates for the fuzzy scaling outputs}\label{tab:membership_parameters}%
+\begin{center}
+\begin{minipage}{\columnwidth}
+\setlength{\tabcolsep}{10pt}
+\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Output Factor} & \textbf{Linguistic Region} & \textbf{Numerical Parameters $[x_1, x_2, x_3, x_4]$} \\
+\midrule
+        & Baixo & [0.10, 0.10, 0.20, 0.30] \\
+$\alpha_p \in [0, 1]$ & Médio & [0.20, 0.40, 0.60, 0.80] \\
+        & Alto  & [0.70, 0.85, 1.00, 1.00] \\
+\midrule
+        & Baixo  & [0.30, 0.50, 0.60, 0.80] \\
+$\alpha_i \in [0.3, 1.5]$ & Normal & [0.75, 0.82, 1.18, 1.26] \\
+        & Alto   & [1.18, 1.25, 1.42, 1.50] \\
+\midrule
+        & Baixo & [0.095, 0.171, 0.280, 0.370] \\
+$\alpha_d \in [0, 1]$ & Médio & [0.370, 0.420, 0.550, 0.640] \\
+        & Alto  & [0.640, 0.710, 0.820, 1.000] \\
+\botrule
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+The aggregated fuzzy outputs are mapped back into crisp real-time correction factors using the standard center-of-gravity defuzzification method. This adaptive structure is seamlessly wrapped around both the equivalent voltage distribution loop and the virtual current loop to compare transient performance bounds under identical physical excitations.
+
 \section{Results and discussion }\label{sec4}
+
+\section{Experimental Results and Discussion}
+\label{sec:experimental_results}
+
+This section presents the experimental performance analysis of the twin-rotor aeropendulum under four distinct operational conditions angular step references, evaluated both with and without external disturbances. In each scenario, the classical parallel PID and the adaptive hybrid Fuzzy-PID controllers are comprehensively benchmarked under both equivalent voltage and virtual current actuation frameworks. 
+
+\subsection{Experimental Parameters and Signal Flow Architecture}
+\label{sub:experimental_parameters}
+
+The baseline parameters obtained during the simulation stage served as the initial state for the physical embedded system. However, during real-time deployment, minor empirical adjustments were required to compensate for physical motor asymmetries, structural measurement noise, and aerodynamic non-linearities. 
+
+The discrepancy between simulation and experimental parameters is primarily attributed to the current actuation framework. While the analytical model considers the armature current directly via the torque constant ($K_t$), the physical microprocessor outputs a digital $\text{PWM}$ duty cycle proportional to the estimated variable. To bridge this gap and coordinate the physical experiments, a unified execution architecture was developed within the processing unit. The operational signal flow governing this real-time implementation is mapped in Fig.~\ref{fig:control_flow_diagram}.
+
+\begin{figure*}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{DiAGRAMAIC.eps} % O asterisco faz ocupar as duas colunas e o 0.85 expande o tamanho dela na página
+    \caption{Real-time signal flow and operational block diagram of the embedded control loop execution.}
+    \label{fig:control_flow_diagram}
+\end{figure*}
+
+The finalized controller parameters utilized throughout the experimental campaign are consolidated in Table~\ref{tab:experimental_gains}. The heuristic fuzzy rules and output boundaries established in Section 3 remained unaltered, with gain tuning managed in real-time via the developed supervisory graphical user interface.
+
+\begin{table}[h]
+\caption{Final controller parameters applied during the experimental verification}\label{tab:experimental_gains}%
+\begin{center}
+\begin{minipage}{\columnwidth}
+\setlength{\tabcolsep}{10pt}
+\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Controller Architecture} & $\mathbf{K_p}$ & $\mathbf{K_i}$ & $\mathbf{K_d}$ \\
+\midrule
+PID -- Voltage Framework          & 5.00 & 10.00 & 0.200 \\
+PID -- Virtual Current Framework  & 0.05 & 0.03  & 0.009 \\
+Fuzzy-PID -- Voltage Baseline     & 5.00 & 10.00 & 0.200 \\
+Fuzzy-PID -- Current Baseline     & 0.05 & 0.03  & 0.009 \\
+\botrule
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+\subsection{Transient Tracking under Step References ($\pm20^\circ$)}
+\label{sub:step_tracking}
+
+To evaluate the tracking capability and operational symmetry of the architectures, a step reference of $\pm20^\circ$ was injected at $t = 10\text{ s}$ from a steady state of repose. The real-time angular displacement tracking performance over a $60\text{ s}$ horizon is illustrated in Fig.~\ref{fig:angular_displacement_response}. Concurrently, the respective actuator efforts representing the generated control signals are presented in Fig.~\ref{fig:control_signals_response}.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{posicao.eps} % Substitua pelo seu arquivo de +20°
+        \caption{Positive step reference ($+20^\circ$).}
+        \label{fig:pos_step_20}
+    \end{subfigure}
+    \\ \vspace{0.3cm} % Quebra a linha para empilhar e adiciona um pequeno espaço vertical elegante
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{posicaomenos.eps} % Substitua pelo seu arquivo de -20°
+        \caption{Negative step reference ($-20^\circ$).}
+        \label{fig:neg_step_20}
+    \end{subfigure}
+    \caption{Experimental angular displacement tracking performance under positive and negative step references.}
+    \label{fig:angular_displacement_response}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{sinal_controle.eps} % Substitua pelo nome do arquivo da sua Figura 42
+        \caption{Positive step ($+20^\circ$).}
+        \label{fig:control_sig_pos}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{sinal_controlemenor.eps} % Substitua pelo nome do arquivo da sua Figura 43
+        \caption{Negative step ($-20^\circ$).}
+        \label{fig:control_sig_neg}
+    \end{subfigure}
+    \caption{Real-time control effort signals dispatched to the propulsion units under step references.}
+    \label{fig:control_signals_response}
+\end{figure}
+
+To provide a thorough quantitative validation, Table~\ref{tab:temporal_metrics_combined} details the classical transient performance indicators, while Table~\ref{tab:error_indices_combined} consolidates the integral error criteria—namely the Integral Absolute Error (IAE), Integral Squared Error (ISE), Integral Time Absolute Error (ITAE)—along with the Integral of Squared Structure Control (ISSC) to measure energetic efficiency.
+
+\begin{table}[h]
+\caption{Combined transient performance metrics for voltage and current frameworks}\label{tab:temporal_metrics_combined}%
+\begin{center}
+\begin{minipage}{\columnwidth}
+\setlength{\tabcolsep}{4pt}
+\footnotesize
+\begin{tabular}{@{}cclccccc@{}}
+\toprule
+\textbf{Setpoint} & \textbf{Actuation} & \textbf{Controller} & $\mathbf{\theta_{\text{pico}}\,(^\circ)}$ & $\mathbf{\theta_{\text{final}}\,(^\circ)}$ & $\mathbf{O_s\,(\%)}$ & $\mathbf{t_r\,(\text{s})}$ & $\mathbf{t_s\,(\text{s})}$ \\
+\midrule
+         & Tensão   & PID       & 20.20 & 20.10 & 0.50 & 4.78 & 37.39 \\
+$+20^\circ$ & Tensão   & Fuzzy-PID & 21.70 & 21.34 & 1.67 & 6.77 & 55.02 \\
+         & Corrente & PID       & 19.97 & 19.60 & 1.90 & 6.10 & 18.54 \\
+         & Corrente & Fuzzy-PID & 21.04 & 20.49 & 2.67 & 8.76 & 50.07 \\
+\midrule
+         & Tensão   & PID       & -20.90 & -20.33 & 2.78 & 4.51 & 54.83 \\
+$-20^\circ$ & Tensão   & Fuzzy-PID & -22.00 & -21.46 & 2.51 & 7.66 & 53.74 \\
+         & Corrente & PID       & -19.94 & -19.50 & 2.23 & 7.25 & 40.96 \\
+         & Corrente & Fuzzy-PID & -20.99 & -20.64 & 1.71 & 9.30 & 25.06 \\
+\botrule
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{Integrated performance error indices and energetic control efforts}\label{tab:error_indices_combined}%
+\begin{center}
+\begin{minipage}{\columnwidth}
+\setlength{\tabcolsep}{6pt}
+\footnotesize
+\begin{tabular}{@{}cclcccc@{}}
+\toprule
+\textbf{Setpoint} & \textbf{Actuation} & \textbf{Controller} & \textbf{IAE} & \textbf{ISE} & \textbf{ITAE} & \textbf{ISSC} \\
+\midrule
+         & Tensão   & PID       & 66.050 & 746.64 & 940.03  & 1571.73 \\
+$+20^\circ$ & Tensão   & Fuzzy-PID & 134.324& 1263.10& 2957.58 & 1966.19 \\
+         & Corrente & PID       & 79.833 & 845.22 & 1214.70 & 624.77  \\
+         & Corrente & Fuzzy-PID & 114.673& 1104.99& 2089.93 & 663.74  \\
+\midrule
+         & Tensão   & PID       & 69.792 & 726.48 & 1288.53 & 2040.42 \\
+$-20^\circ$ & Tensão   & Fuzzy-PID & 127.793& 1201.39& 2851.11 & 1758.59 \\
+         & Corrente & PID       & 81.828 & 705.85 & 1407.05 & 508.89  \\
+         & Corrente & Fuzzy-PID & 118.342& 1070.72& 2358.39 & 775.60  \\
+\botrule
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+\subsection{Comparative Analysis and Discussion}
+\label{sub:comparative_discussion}
+
+The joint analysis of the transient tracking profiles exposes significant behavioral divergence between the equivalent voltage and virtual current frameworks. Under both reference polarities, the voltage-driven PID achieved the fastest rise times ($t_r = 4.78\text{ s}$ for $+20^\circ$ and $t_r = 4.51\text{ s}$ for $-20^\circ$), showcasing a highly responsive initial acceleration. However, this snappy behavior comes at the expense of substantial energetic aggression, as evidenced by the high ISSC values ($1571.73$ and $2040.42$, respectively). This high-frequency saturation behavior poses a strict structural demand over the motor-ESC modules.
+
+Conversely, the current-driven loop attenuates this initial aggressiveness, providing slightly longer rise times but significantly shrinking the global settling time ($t_s$). For instance, under a positive step, the current-driven PID achieved a settling time of $18.54\text{ s}$, a $50.4\%$ reduction compared to the $37.39\text{ s}$ boundary observed in the voltage framework. More importantly, the current-driven framework achieved a drastic mitigation in control energy expenditure, dropping the ISSC to $624.77$ (a $60.2\%$ energy saving). This phenomenon validates that embedding the linear current-to-torque conversion dynamics inside the execution software successfully minimizes the asymmetric thrust saturation caused by aerodynamic variations in the propellers.
+
+The advantages of the proposed virtual current loop become remarkably prominent when paired with the intelligent adaptive Fuzzy-PID controller. For a $+20^\circ$ trajectory, shifting from voltage to current actuation caused the integral criteria to plunge: IAE dropped from $134.32$ to $114.67$, ITAE decreased from $2957.58$ to $2089.93$, and the electrical stress index (ISSC) fell by $66.2\%$, from $1966.19$ down to $663.74$. Symmetrical decoupling is observed for the negative step ($-20^\circ$), where current-loop cascade mapping cut the settling time from $53.74\text{ s}$ to $25.06\text{ s}$ while slashing the energetic effort from $1758.59$ to $775.60$. 
+
+Consequently, the experimental results demonstrate that interpreting the control variable as an estimated armature current consistently delivers superior global damping, transient precision, and electrical stability. Among all analyzed combinations, the current-driven Fuzzy-PID architecture establishes the most effective engineering trade-off between transient response agility and operational power efficiency.
+
 
 \section{Conclusion and future work }\label{sec5}
 
 
 ----------- daqui para baixo é do template, não apaguei porque estou usando a estrutura para table and equations ----------
-
-\section{Equations}\label{sec4}
-
-Equations in \LaTeX\ can either be inline or on-a-line by itself (``display equations''). For
-inline equations use the \verb+$...$+ commands. E.g.: The equation
-$H\psi = E \psi$ is written via the command \verb+$H \psi = E \psi$+.
-
-For display equations (with auto generated equation numbers)
-one can use the equation or align environments:
-\begin{equation}
-\|\tilde{X}(k)\|^2 \leq\frac{\sum\limits_{i=1}^{p}\left\|\tilde{Y}_i(k)\right\|^2+\sum\limits_{j=1}^{q}\left\|\tilde{Z}_j(k)\right\|^2 }{p+q}.\label{eq1}
-\end{equation}
-where,
-\begin{align}
-D_\mu &=  \partial_\mu - ig \frac{\lambda^a}{2} A^a_\mu \nonumber \\
-F^a_{\mu\nu} &= \partial_\mu A^a_\nu - \partial_\nu A^a_\mu + g f^{abc} A^b_\mu A^a_\nu \label{eq2}
-\end{align}
-Notice the use of \verb+\nonumber+ in the align environment at the end
-of each line, except the last, so as not to produce equation numbers on
-lines where no equation numbers are required. The \verb+\label{}+ command
-should only be used at the last line of an align environment where
-\verb+\nonumber+ is not used.
-\begin{equation}
-Y_\infty = \left( \frac{m}{\textrm{GeV}} \right)^{-3}
-    \left[ 1 + \frac{3 \ln(m/\textrm{GeV})}{15}
-    + \frac{\ln(c_2/5)}{15} \right]
-\end{equation}
-The class file also supports the use of \verb+\mathbb{}+, \verb+\mathscr{}+ and
-\verb+\mathcal{}+ commands. As such \verb+\mathbb{R}+, \verb+\mathscr{R}+
-and \verb+\mathcal{R}+ produces $\mathbb{R}$, $\mathscr{R}$ and $\mathcal{R}$
-respectively (refer Subsubsection~\ref{subsubsec2}).
-
-\section{Tables}\label{sec5}
-
-Tables can be inserted via the normal table and tabular environment. To put
-footnotes inside tables you should use \verb+\footnotetext[]{...}+ tag.
-The footnote appears just below the table itself (refer Tables~\ref{tab1} and \ref{tab2}). 
-For the corresponding footnotemark use \verb+\footnotemark[...]+
-
-\begin{table}[h]
-\caption{Caption text}\label{tab1}%
-\begin{tabular}{@{}llll@{}}
-\toprule
-Column 1 & Column 2  & Column 3 & Column 4\\
-\midrule
-row 1    & data 1   & data 2  & data 3  \\
-row 2    & data 4   & data 5\footnotemark[1]  & data 6  \\
-row 3    & data 7   & data 8  & data 9\footnotemark[2]  \\
-\botrule
-\end{tabular}
-\footnotetext{Source: This is an example of table footnote. This is an example of table footnote.}
-\footnotetext[1]{Example for a first table footnote. This is an example of table footnote.}
-\footnotetext[2]{Example for a second table footnote. This is an example of table footnote.}
-\end{table}
-
-\noindent
-The input format for the above table is as follows:
-
-%%=============================================%%
-%% For presentation purpose, we have included  %%
-%% \bigskip command. Please ignore this.       %%
-%%=============================================%%
-\bigskip
-\begin{verbatim}
-\begin{table}[<placement-specifier>]
-\caption{<table-caption>}\label{<table-label>}%
-\begin{tabular}{@{}llll@{}}
-\toprule
-Column 1 & Column 2 & Column 3 & Column 4\\
-\midrule
-row 1 & data 1 & data 2	 & data 3 \\
-row 2 & data 4 & data 5\footnotemark[1] & data 6 \\
-row 3 & data 7 & data 8	 & data 9\footnotemark[2]\\
-\botrule
-\end{tabular}
-\footnotetext{Source: This is an example of table footnote. 
-This is an example of table footnote.}
-\footnotetext[1]{Example for a first table footnote.
-This is an example of table footnote.}
-\footnotetext[2]{Example for a second table footnote. 
-This is an example of table footnote.}
-\end{table}
-\end{verbatim}
-\bigskip
-%%=============================================%%
-%% For presentation purpose, we have included  %%
-%% \bigskip command. Please ignore this.       %%
-%%=============================================%%
-
-\begin{table}[h]
-\caption{Example of a lengthy table which is set to full textwidth}\label{tab2}
-\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
-\toprule%
-& \multicolumn{3}{@{}c@{}}{Element 1\footnotemark[1]} & \multicolumn{3}{@{}c@{}}{Element 2\footnotemark[2]} \\\cmidrule{2-4}\cmidrule{5-7}%
-Project & Energy & $\sigma_{calc}$ & $\sigma_{expt}$ & Energy & $\sigma_{calc}$ & $\sigma_{expt}$ \\
-\midrule
-Element 3  & 990 A & 1168 & $1547\pm12$ & 780 A & 1166 & $1239\pm100$\\
-Element 4  & 500 A & 961  & $922\pm10$  & 900 A & 1268 & $1092\pm40$\\
-\botrule
-\end{tabular*}
-\footnotetext{Note: This is an example of table footnote. This is an example of table footnote this is an example of table footnote this is an example of~table footnote this is an example of table footnote.}
-\footnotetext[1]{Example for a first table footnote.}
-\footnotetext[2]{Example for a second table footnote.}
-\end{table}
-
-In case of double column layout, tables which do not fit in single column width should be set to full text width. For this, you need to use \verb+\begin{table*}+ \verb+...+ \verb+\end{table*}+ instead of \verb+\begin{table}+ \verb+...+ \verb+\end{table}+ environment. Lengthy tables which do not fit in textwidth should be set as rotated table. For this, you need to use \verb+\begin{sidewaystable}+ \verb+...+ \verb+\end{sidewaystable}+ instead of \verb+\begin{table*}+ \verb+...+ \verb+\end{table*}+ environment. This environment puts tables rotated to single column width. For tables rotated to double column width, use \verb+\begin{sidewaystable*}+ \verb+...+ \verb+\end{sidewaystable*}+.
-
-\begin{sidewaystable}
-\caption{Tables which are too long to fit, should be written using the ``sidewaystable'' environment as shown here}\label{tab3}
-\begin{tabular*}{\textheight}{@{\extracolsep\fill}lcccccc}
-\toprule%
-& \multicolumn{3}{@{}c@{}}{Element 1\footnotemark[1]}& \multicolumn{3}{@{}c@{}}{Element\footnotemark[2]} \\\cmidrule{2-4}\cmidrule{5-7}%
-Projectile & Energy	& $\sigma_{calc}$ & $\sigma_{expt}$ & Energy & $\sigma_{calc}$ & $\sigma_{expt}$ \\
-\midrule
-Element 3 & 990 A & 1168 & $1547\pm12$ & 780 A & 1166 & $1239\pm100$ \\
-Element 4 & 500 A & 961  & $922\pm10$  & 900 A & 1268 & $1092\pm40$ \\
-Element 5 & 990 A & 1168 & $1547\pm12$ & 780 A & 1166 & $1239\pm100$ \\
-Element 6 & 500 A & 961  & $922\pm10$  & 900 A & 1268 & $1092\pm40$ \\
-\botrule
-\end{tabular*}
-\footnotetext{Note: This is an example of table footnote this is an example of table footnote this is an example of table footnote this is an example of~table footnote this is an example of table footnote.}
-\footnotetext[1]{This is an example of table footnote.}
-\end{sidewaystable}
-
-\section{Figures}\label{sec6}
-
-As per the \LaTeX\ standards you need to use eps images for \LaTeX\ compilation and \verb+pdf/jpg/png+ images for \verb+PDFLaTeX+ compilation. This is one of the major difference between \LaTeX\ and \verb+PDFLaTeX+. Each image should be from a single input .eps/vector image file. Avoid using subfigures. The command for inserting images for \LaTeX\ and \verb+PDFLaTeX+ can be generalized. The package used to insert images in \verb+LaTeX/PDFLaTeX+ is the graphicx package. Figures can be inserted via the normal figure environment as shown in the below example:
-
-%%=============================================%%
-%% For presentation purpose, we have included  %%
-%% \bigskip command. Please ignore this.       %%
-%%=============================================%%
-\bigskip
-\begin{verbatim}
-\begin{figure}[<placement-specifier>]
-\centering
-\includegraphics{<eps-file>}
-\caption{<figure-caption>}\label{<figure-label>}
-\end{figure}
-\end{verbatim}
-\bigskip
-%%=============================================%%
-%% For presentation purpose, we have included  %%
-%% \bigskip command. Please ignore this.       %%
-%%=============================================%%
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{fig.eps}
-\caption{This is a widefig. This is an example of long caption this is an example of long caption  this is an example of long caption this is an example of long caption}\label{fig1}
-\end{figure}
-
-In case of double column layout, the above format puts figure captions/images to single column width. To get spanned images, we need to provide \verb+\begin{figure*}+ \verb+...+ \verb+\end{figure*}+.
-
-For sample purpose, we have included the width of images in the optional argument of \verb+\includegraphics+ tag. Please ignore this. 
-
-\section{Algorithms, Program codes and Listings}\label{sec7}
-
-Packages \verb+algorithm+, \verb+algorithmicx+ and \verb+algpseudocode+ are used for setting algorithms in \LaTeX\ using the format:
-
-%%=============================================%%
-%% For presentation purpose, we have included  %%
-%% \bigskip command. Please ignore this.       %%
-%%=============================================%%
-\bigskip
-\begin{verbatim}
-\begin{algorithm}
-\caption{<alg-caption>}\label{<alg-label>}
-\begin{algorithmic}[1]
-. . .
-\end{algorithmic}
-\end{algorithm}
-\end{verbatim}
-\bigskip
-%%=============================================%%
-%% For presentation purpose, we have included  %%
-%% \bigskip command. Please ignore this.       %%
-%%=============================================%%
-
-You may refer above listed package documentations for more details before setting \verb+algorithm+ environment. For program codes, the ``verbatim'' package is required and the command to be used is \verb+\begin{verbatim}+ \verb+...+ \verb+\end{verbatim}+. 
-
-Similarly, for \verb+listings+, use the \verb+listings+ package. \verb+\begin{lstlisting}+ \verb+...+ \verb+\end{lstlisting}+ is used to set environments similar to \verb+verbatim+ environment. Refer to the \verb+lstlisting+ package documentation for more details.
-
-A fast exponentiation procedure:
-
-\lstset{texcl=true,basicstyle=\small\sf,commentstyle=\small\rm,mathescape=true,escapeinside={(*}{*)}}
-\begin{lstlisting}
-begin
-  for $i:=1$ to $10$ step $1$ do
-      expt($2,i$);  
-      newline() od                (*\textrm{Comments will be set flush to the right margin}*)
-where
-proc expt($x,n$) $\equiv$
-  $z:=1$;
-  do if $n=0$ then exit fi;
-     do if odd($n$) then exit fi;                 
-        comment: (*\textrm{This is a comment statement;}*)
-        $n:=n/2$; $x:=x*x$ od;
-     { $n>0$ };
-     $n:=n-1$; $z:=z*x$ od;
-  print($z$). 
-end
-\end{lstlisting}
-
-\begin{algorithm}
-\caption{Calculate $y = x^n$}\label{algo1}
-\begin{algorithmic}[1]
-\Require $n \geq 0 \vee x \neq 0$
-\Ensure $y = x^n$ 
-\State $y \Leftarrow 1$
-\If{$n < 0$}\label{algln2}
-        \State $X \Leftarrow 1 / x$
-        \State $N \Leftarrow -n$
-\Else
-        \State $X \Leftarrow x$
-        \State $N \Leftarrow n$
-\EndIf
-\While{$N \neq 0$}
-        \If{$N$ is even}
-            \State $X \Leftarrow X \times X$
-            \State $N \Leftarrow N / 2$
-        \Else[$N$ is odd]
-            \State $y \Leftarrow y \times X$
-            \State $N \Leftarrow N - 1$
-        \EndIf
-\EndWhile
-\end{algorithmic}
-\end{algorithm}
-
-%%=============================================%%
-%% For presentation purpose, we have included  %%
-%% \bigskip command. Please ignore this.       %%
-%%=============================================%%
-\bigskip
-\begin{minipage}{\hsize}%
-\lstset{frame=single,framexleftmargin=-1pt,framexrightmargin=-17pt,framesep=12pt,linewidth=0.98\textwidth,language=pascal}% Set your language (you can change the language for each code-block optionally)
-%%% Start your code-block
-\begin{lstlisting}
-for i:=maxint to 0 do
-begin
-{ do nothing }
-end;
-Write('Case insensitive ');
-Write('Pascal keywords.');
-\end{lstlisting}
-\end{minipage}
-
-\section{Cross referencing}\label{sec8}
-
-Environments such as figure, table, equation and align can have a label
-declared via the \verb+\label{#label}+ command. For figures and table
-environments use the \verb+\label{}+ command inside or just
-below the \verb+\caption{}+ command. You can then use the
-\verb+\ref{#label}+ command to cross-reference them. As an example, consider
-the label declared for Figure~\ref{fig1} which is
-\verb+\label{fig1}+. To cross-reference it, use the command 
-\verb+Figure \ref{fig1}+, for which it comes up as
-``Figure~\ref{fig1}''. 
-
-To reference line numbers in an algorithm, consider the label declared for the line number 2 of Algorithm~\ref{algo1} is \verb+\label{algln2}+. To cross-reference it, use the command \verb+\ref{algln2}+ for which it comes up as line~\ref{algln2} of Algorithm~\ref{algo1}.
-
-\subsection{Details on reference citations}\label{subsec7}
-
-Standard \LaTeX\ permits only numerical citations. To support both numerical and author-year citations this template uses \verb+natbib+ \LaTeX\ package. For style guidance please refer to the template user manual.
-
-Here is an example for \verb+\cite{...}+: \cite{bib1}. Another example for \verb+\citep{...}+: \citep{bib2}. For author-year citation mode, \verb+\cite{...}+ prints Jones et al. (1990) and \verb+\citep{...}+ prints (Jones et al., 1990).
-
-All cited bib entries are printed at the end of this article: \cite{bib3}, \cite{bib4}, \cite{bib5}, \cite{bib6}, \cite{bib7}, \cite{bib8}, \cite{bib9}, \cite{bib10}, \cite{bib11}, \cite{bib12} and \cite{bib13}.
-
-\section{Examples for theorem like environments}\label{sec10}
-
-For theorem like environments, we require \verb+amsthm+ package. There are three types of predefined theorem styles exists---\verb+thmstyleone+, \verb+thmstyletwo+ and \verb+thmstylethree+ 
-
-%%=============================================%%
-%% For presentation purpose, we have included  %%
-%% \bigskip command. Please ignore this.       %%
-%%=============================================%%
-\bigskip
-\begin{tabular}{|l|p{19pc}|}
-\hline
-\verb+thmstyleone+ & Numbered, theorem head in bold font and theorem text in italic style \\\hline
-\verb+thmstyletwo+ & Numbered, theorem head in roman font and theorem text in italic style \\\hline
-\verb+thmstylethree+ & Numbered, theorem head in bold font and theorem text in roman style \\\hline
-\end{tabular}
-\bigskip
-%%=============================================%%
-%% For presentation purpose, we have included  %%
-%% \bigskip command. Please ignore this.       %%
-%%=============================================%%
-
-For mathematics journals, theorem styles can be included as shown in the following examples:
-
-\begin{theorem}[Theorem subhead]\label{thm1}
-Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. 
-Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. 
-Example theorem text. 
-\end{theorem}
-
-Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
-
-\begin{proposition}
-Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. 
-Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. 
-\end{proposition}
-
-Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
-
-\begin{example}
-Phasellus adipiscing semper elit. Proin fermentum massa
-ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend
-at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. 
-\end{example}
-
-Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
-
-\begin{remark}
-Phasellus adipiscing semper elit. Proin fermentum massa
-ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend
-at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. 
-\end{remark}
-
-Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
-
-\begin{definition}[Definition sub head]
-Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. 
-\end{definition}
-
-Additionally a predefined ``proof'' environment is available: \verb+\begin{proof}+ \verb+...+ \verb+\end{proof}+. This prints a ``Proof'' head in italic font style and the ``body text'' in roman font style with an open square at the end of each proof environment. 
-
-\begin{proof}
-Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. 
-\end{proof}
-
-Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
-
-\begin{proof}[Proof of Theorem~{\upshape\ref{thm1}}]
-Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. 
-\end{proof}
-
-\noindent
-For a quote environment, use \verb+\begin{quote}...\end{quote}+
-\begin{quote}
-Quoted text example. Aliquam porttitor quam a lacus. Praesent vel arcu ut tortor cursus volutpat. In vitae pede quis diam bibendum placerat. Fusce elementum
-convallis neque. Sed dolor orci, scelerisque ac, dapibus nec, ultricies ut, mi. Duis nec dui quis leo sagittis commodo.
-\end{quote}
-
-Sample body text. Sample body text. Sample body text. Sample body text. Sample body text (refer Figure~\ref{fig1}). Sample body text. Sample body text. Sample body text (refer Table~\ref{tab3}). 
-
-\section{Methods}\label{sec11}
-
-Topical subheadings are allowed. Authors must ensure that their Methods section includes adequate experimental and characterization data necessary for others in the field to reproduce their work. Authors are encouraged to include RIIDs where appropriate. 
-
-\textbf{Ethical approval declarations} (only required where applicable) Any article reporting experiment/s carried out on (i)~live vertebrate (or higher invertebrates), (ii)~humans or (iii)~human samples must include an unambiguous statement within the methods section that meets the following requirements: 
-
-\begin{enumerate}[1.]
-\item Approval: a statement which confirms that all experimental protocols were approved by a named institutional and/or licensing committee. Please identify the approving body in the methods section
-
-\item Accordance: a statement explicitly saying that the methods were carried out in accordance with the relevant guidelines and regulations
-
-\item Informed consent (for experiments involving humans or human tissue samples): include a statement confirming that informed consent was obtained from all participants and/or their legal guardian/s
-\end{enumerate}
-
-If your manuscript includes potentially identifying patient/participant information, or if it describes human transplantation research, or if it reports results of a clinical trial then  additional information will be required. Please visit (\url{https://www.nature.com/nature-research/editorial-policies}) for Nature Portfolio journals, (\url{https://www.springer.com/gp/authors-editors/journal-author/journal-author-helpdesk/publishing-ethics/14214}) for Springer Nature journals, or (\url{https://www.biomedcentral.com/getpublished/editorial-policies\#ethics+and+consent}) for BMC.
-
-\section{Discussion}\label{sec12}
-
-Discussions should be brief and focused. In some disciplines use of Discussion or `Conclusion' is interchangeable. It is not mandatory to use both. Some journals prefer a section `Results and Discussion' followed by a section `Conclusion'. Please refer to Journal-level guidance for any specific requirements. 
-
-\section{Conclusion}\label{sec13}
-
-Conclusions may be used to restate your hypothesis or research question, restate your major findings, explain the relevance and the added value of your work, highlight any limitations of your study, describe future directions for research and recommendations. 
-
-In some disciplines use of Discussion or 'Conclusion' is interchangeable. It is not mandatory to use both. Please refer to Journal-level guidance for any specific requirements. 
 
 \backmatter
 
