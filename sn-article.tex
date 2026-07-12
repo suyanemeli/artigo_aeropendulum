@@ -148,9 +148,19 @@ Position Control of a Two-Propeller Aeropendulum: A Comparison Between Voltage a
 
 \section{Introduction}\label{sec1}
 
-The Introduction section, of referenced text \cite{bib1} expands on the background of the work (some overlap with the Abstract is acceptable). The introduction should not include subheadings.
+Control systems play a central role in the advancement of modern technologies by ensuring precision, stability, and operational efficiency even in the face of disturbances and severe dynamic conditions. However, translating abstract mathematical models encountered in academic settings into real-world solutions requires a rigorous alignment between theory and experimental validation—a connection that characterizes a persistent pedagogical and technical challenge in the development of new technologies. 
+Aiming to mitigate this gap between academia and the practical demands of industry, recent investigations, such as those conducted by \citet{antunes2026improving}, propose restructuring technical learning through methodologies based on practical and interdisciplinary projects. This approach is grounded in the strategic use of didactic platforms and testbeds, which emerge as a fundamental link in control engineering by offering a safe, replicable, and low-cost environment to evaluate the performance of new algorithms before their effective transition to high-complexity applications.
 
-Springer Nature does not impose a strict layout as standard however authors are advised to check the individual requirements for the journal they are planning to submit to as there may be journal-level preferences. When preparing your text please also be aware that some stylistic choices are not supported in full text XML (publication version), including coloured font. These will not be replicated in the typeset article if it is accepted. 
+Among the real-world applications requiring this high level of technical rigor, Unmanned Aerial Vehicles (UAVs) stand out. These systems rely heavily on robust control strategies capable of ensuring stability, precise trajectory tracking, and external disturbance rejection. The use of UAVs has expanded significantly across various strategic sectors. In precision agriculture, for instance, these aircraft are utilized for crop monitoring and multispectral analysis to directly assist in decision-making and intelligent crop management \citep{anziliero2021tecnicas}. Similarly, in environmental and industrial monitoring, the integration of onboard sensors and high-resolution cameras contributes to the advancement of autonomous navigation and situational perception of the environment \citep{policarpo2025camera}.
+To enable the autonomy required for these highly complex missions and to ensure aircraft integrity in dynamic operational scenarios, recent literature has focused efforts on advancing high-level control loops for navigation and guidance. In this regard, real-time collision avoidance solutions based on velocity constraints and short-range sensors have been proposed, validated through complex augmented reality setups and motion capture systems \citep{ricardo2024robust}. Similarly, advanced Model Predictive Control (MPC) algorithms structured around zonotopes and LMI matrices are explored to mitigate uncertainties in demanding tasks, such as suspended load transportation, relying on high-fidelity simulations within virtual environments like Gazebo and ROS \citep{andrade2024tube}. Additionally, model-free approaches based on Integral Reinforcement Learning (IRL) have been suggested to coordinate the formation flight of multiple quadrotors, circumventing the severe non-linearities of the system through purely computational validations in the MATLAB environment \citep{dinh2025model}.
+Additionally, to handle actuator faults and environmental disturbances, intelligent strategies based on feedback linearization coupled with adaptive fuzzy logic and sliding mode control (SMC) are designed to guarantee attitude stability \citep{aghazamani2025position}, while novel triple-power reaching laws optimized by particle swarm optimization (PSO) are proposed for fault tolerance in quadrotors \citep{benayad2025hybrid}. However, transposing these investigations directly onto physical aerial platforms imposes severe practical barriers. The imminent risk of crashes, premature wear of electromechanical components, the high cost of tracking infrastructures, and the inherent complexity of implementing high computational-demand algorithms on embedded microcontrollers make direct experimental validation a risky and often unfeasible process for early stages of development.
+
+In light of these limitations, the use of didactic platforms and physical testbeds consolidates itself as a strategic alternative for the practical study of aerospace dynamics, with the aeropendulum standing out among them. This system essentially consists of a rotational arm restricted to a single degree of freedom, driven by a motor-propeller assembly whose dynamics reproduce, in a simplified and faithful manner, the fundamental relationship between thrust, torque, and angular movement present in rotary-wing aircraft \citep{tanveer2023robust, rojas2024hunting}. Thereby, the aeropendulum allows the investigation of critical stability phenomena, transient response, and disturbance rejection within a safe, replicable, and controlled environment.
+
+However, the practical effectiveness of any algorithm designed for these platforms strictly depends on how the control action is handled at the lower actuator level. In propulsion systems based on DC or BLDC motors driven by commercial electronic speed controllers (ESCs), the standard low-level command interface traditionally operates by mapping the manipulated variable into a voltage signal via pulse-width modulation (PWM) \citep{tanveer2023robust, rojas2024hunting}. This voltage excitation strategy, although widely adopted due to its simplicity of implementation, introduces severe dynamic non-linearities arising from back-electromotive force, thermal variations in armature resistance, and the deadband behavior imposed by the static friction of the rotor \citep{rafiuddin2023nonlinear}. Since the thrust forces and aerodynamic torques fundamental to the plant's movement derive directly from the electromechanical torque—which bears a purely linear relationship with electrical current, and not with voltage—the imposition of a current control loop emerges as a critical alternative to linearize the actuation channel and accelerate the transient response of the system.
+
+Despite these clear physical benefits, experimental research regarding the transition and direct impact between voltage and current actuation paradigms in low-level loops still constitutes a practical gap in the literature of compact aerospace testbeds. To bridge this gap, the present work adopts the aeropendulum as an experimental investigation platform. The primary contribution of this study resides in the development and rigorous comparison between the conventional voltage-oriented loop and a virtual current loop estimated and implemented entirely via software. Both actuation structures are evaluated under the action of a classical PID controller and an intelligent hybrid Fuzzy-PID architecture, clearly mapping the boundaries of energy efficiency and transient robustness of the plant.
+
 
 \section{Mathematical modeling}\label{sec2}
 
@@ -775,9 +785,9 @@ Nature Portfolio journals: \url{https://www.nature.com/nature-research/editorial
 BMC journals: \url{https://www.biomedcentral.com/getpublished/editorial-policies}
 \end{flushleft}
 
-\begin{appendices}
+%%\begin{appendices}
 
-\section{Section title of first appendix}\label{secA1}
+%%\\section{Section title of first appendix}\label{secA1}
 
 An appendix contains supplementary information that is not an essential part of the text itself but which may be helpful in providing a more comprehensive understanding of the research problem or it is information that is too cumbersome to be included in the body of the paper.
 
@@ -795,7 +805,7 @@ An appendix contains supplementary information that is not an essential part of 
 %% clutter, break up or be distracting to the text. Appendices can consist of sections, figures, 
 %% tables and equations etc.
 
-\end{appendices}
+%%\\end{appendices}
 
 %%===========================================================================================%%
 %% If you are submitting to one of the Nature Portfolio journals, using the eJP submission   %%
