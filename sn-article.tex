@@ -621,47 +621,46 @@ To evaluate the tracking capability and operational symmetry of the architecture
     \centering
     \begin{subfigure}{0.45\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{sinal_controle.eps} % Substitua pelo nome do arquivo da sua Figura 42
+        \includegraphics[width=\textwidth]{sinal_controle_positivo_ingles.eps} % Substitua pelo nome do arquivo da sua Figura 42
         \caption{Positive step ($+20^\circ$).}
         \label{fig:control_sig_pos}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.45\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{sinal_controlemenor.eps} % Substitua pelo nome do arquivo da sua Figura 43
+        \includegraphics[width=\textwidth]{sinal_controle_negativo_ingles.eps} % Substitua pelo nome do arquivo da sua Figura 43
         \caption{Negative step ($-20^\circ$).}
         \label{fig:control_sig_neg}
     \end{subfigure}
     \caption{Real-time control effort signals dispatched to the propulsion units under step references.}
     \label{fig:control_signals_response}
 \end{figure}
-To provide a thorough quantitative validation, Table~\ref{parametros} details the classical transient performance indicators alongside the integrated error criteria—namely, the Integral Absolute Error (IAE), Integral Squared Error (ISE), and Integral Time Absolute Error (ITAE),and the Integral of Squared Structure Control (ISSC) used to evaluate energetic efficiency.
+To provide a quantitative validation, Table~\ref{parametros} details the time-domain performance metrics and steady-state error alongside the integrated error indices (IAE, ISE, ITAE) and the control effort metric (ISSC).
 
 \begin{table*}[t]
-\caption{Combined transient performance metrics, integrated error indices, and energetic control efforts}\label{tab:performance_metrics_combined}%
+\caption{Combined transient performance metrics, integrated error indices, and energetic control efforts under step references}\label{tab:performance_metrics_combined}%
 \begin{center}
 \begin{minipage}{\textwidth}
-%%\footnotesize % Tamanho de fonte ideal para tabelas densas em formato Springer/IEEE
-\scriptsize % Tamanho ideal para tabelas ultra densas de 12 colunas
-\setlength{\tabcolsep}{2pt}
-% Definimos as 12 colunas da tabela: 3 de configuração (alinhadas à esquerda) + 9 métricas (centralizadas)
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}@{}lllccccccccc@{}}
+\scriptsize % Tamanho ideal para tabelas densas de 11 colunas
+\setlength{\tabcolsep}{4pt} % Espaçamento horizontal elegante para 11 colunas
+% Definimos as 11 colunas da tabela: 3 de configuração + 4 métricas temporais/precisão + 4 índices integrais
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}@{}lllcccccccc@{}}
 \toprule
 % Primeira camada do cabeçalho agrupando as métricas por categoria conceitual
-\textbf{Setpoint} & \textbf{Actuation} & \textbf{Controller} & \multicolumn{5}{c}{\textbf{Transient Performance Metrics}} & \multicolumn{4}{c}{\textbf{Integral Indices}} \\
-\cmidrule(lr){4-8} \cmidrule(lr){9-12}
+\textbf{Setpoint} & \textbf{Actuation} & \textbf{Controller} & \multicolumn{4}{c}{\textbf{Temporal metrics}} & \multicolumn{4}{c}{\textbf{Integral Indices}} \\
+\cmidrule(lr){4-7} \cmidrule(lr){8-11}
 % Segunda camada com os identificadores específicos de cada coluna
-& & & $\mathbf{\theta_{\text{pico}}\,(^{\circ})}$ & $\mathbf{\theta_{\text{final}}\,(^{\circ})}$ & $\mathbf{M_s\,(\%)}$ & $\mathbf{t_r\,(\text{s})}$ & $\mathbf{t_s\,(\text{s})}$ & \textbf{IAE} & \textbf{ISE} & \textbf{ITAE} & \textbf{ISSC} \\
+& & & $\mathbf{M_p\,(\%)}$ & $\mathbf{t_r\,(\text{s})}$ & $\mathbf{t_s\,(\text{s})}$ & $\mathbf{e_{\text{ss}}\,(^{\circ})}$ & \textbf{IAE} & \textbf{ISE} & \textbf{ITAE} & \textbf{ISSC} \\
 \midrule
-            & Voltage  & PID       & 20,20 & 20,10 & 0,50 & 4,78 & 37,39 & 66,050  & 746,64  & 940,03  & 1571,73 \\
-$+20^{\circ}$ & Voltage  & Fuzzy-PID & 21,70 & 21,34 & 1,67 & 6,77 & 55,02 & 134,324 & 1263,10 & 2957,58 & 1966,19 \\
-            & Current  & PID       & 19,97 & 19,60 & 1,90 & 6,10 & 18,54 & 79,833  & 845,22  & 1214,70 & 624,77  \\
-            & Current  & Fuzzy-PID & 21,04 & 20,49 & 2,67 & 8,76 & 50,07 & 114,673 & 1104,99 & 2089,93 & 663,74  \\
+            & Voltage  & PID       & 0,50 & 4,78 & 37,39 & 0,10 & 66,05  & 746,64  & 940,03  & 1571,73 \\
+$+20^{\circ}$ & Voltage  & Fuzzy-PID & 1,67 & 6,77 & 55,02 & 1,34 & 134,32 & 1263,10 & 2957,58 & 1966,19 \\
+            & Current  & PID       & 1,90 & 6,10 & 18,54 & 0,40 & 79,83  & 845,22  & 1214,70 & 624,77  \\
+            & Current  & Fuzzy-PID & 2,67 & 8,76 & 50,07 & 0,49 & 114,67 & 1104,99 & 2089,93 & 663,74  \\
 \midrule
-            & Voltage  & PID       & -20,90 & -20,33 & 2,78 & 4,51 & 54,83 & 69,792  & 726,48  & 1288,53 & 2040,42 \\
-$-20^{\circ}$ & Voltage  & Fuzzy-PID & -22,00 & -21,46 & 2,51 & 7,66 & 53,74 & 127,793 & 1201,39 & 2851,11 & 1758,59 \\
-            & Current  & PID       & -19,94 & -19,50 & 2,23 & 7,25 & 40,96 & 81,828  & 705,85  & 1407,05 & 508,89  \\
-            & Current  & Fuzzy-PID & -20,99 & -20,64 & 1,71 & 9,30 & 25,06 & 118,342 & 1070,72 & 2358,39 & 775,60  \\
+            & Voltage  & PID       & 2,78 & 4,51 & 54,83 & 0,33 & 69,79  & 726,48  & 1288,53 & 2040,42 \\
+$-20^{\circ}$ & Voltage  & Fuzzy-PID & 2,51 & 7,66 & 53,74 & 1,46 & 127,79 & 1201,39 & 2851,11 & 1758,59 \\
+            & Current  & PID       & 2,23 & 7,25 & 40,96 & 0,50 & 81,82  & 705,85  & 1407,05 & 508,89  \\
+            & Current  & Fuzzy-PID & 1,71 & 9,30 & 25,06 & 0,64 & 118,34 & 1070,72 & 2358,39 & 775,60  \\
 \botrule
 \label{parametros}
 \end{tabular*}
@@ -669,40 +668,114 @@ $-20^{\circ}$ & Voltage  & Fuzzy-PID & -22,00 & -21,46 & 2,51 & 7,66 & 53,74 & 1
 \end{center}
 \end{table*}
 
+\subsection{Disturbance Rejection under Step References ($\pm20^\circ$)}
+\label{sub:disturbance_rejection}
+To evaluate the robustness, recovery capability, and disturbance rejection of the proposed control architectures, a step reference of ($\pm20^\circ$) was injected at $t = 10\text{ s}$ from a steady state of repose, followed by the application of an external physical disturbance once the system reached its steady-state operating point. The real-time angular displacement tracking performance under these perturbed conditions is illustrated in Fig.~\ref{fig:disturbance_response}. Concurrently, the respective actuator efforts, representing the generated control signals during the recovery and stabilization process, are presented in Fig.~\ref{fig:disturbance_control_signals}.
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{posicao_positivo_disturbio_ingles.eps}
+        \caption{Positive step reference ($+20^\circ$) under external disturbance.}
+        \label{fig:pos_step_20_dist}
+    \end{subfigure}
+    \\ \vspace{0.3cm} 
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{posicao_negativo_disturbio_ingles.eps}
+        \caption{Negative step reference ($-20^\circ$) under external disturbance.}
+        \label{fig:neg_step_20_dist}
+    \end{subfigure}
+    \caption{Experimental angular displacement tracking performance under positive and negative step references with external disturbances.}
+    \label{fig:disturbance_response}
+\end{figure}
 
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{sinal_controle_positivo_disturbio_ingles.eps}
+        \caption{Control effort during positive step ($+20^\circ$) disturbance recovery.}
+        \label{fig:control_sig_pos_dist}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{sinal_controle_negativo_disturbio_ingles.eps}
+        \caption{Control effort during negative step ($-20^\circ$) disturbance recovery.}
+        \label{fig:control_sig_neg_dist}
+    \end{subfigure}
+    \caption{Real-time control effort signals dispatched to the propulsion units during disturbance rejection and recovery.}
+    \label{fig:disturbance_control_signals}
+\end{figure}
+
+To provide a quantitative validation under perturbed conditions, Table~\ref{tab:performance_metrics_disturbance} details the time-domain performance metrics alongside the integrated error indices (IAE, ISE, ITAE) and the energetic control effort (ISSC).
+
+\begin{table*}[t]
+\caption{Combined transient performance metrics, integrated error indices, and energetic control efforts under external disturbance}\label{tab:performance_metrics_disturbance}%
+\begin{center}
+\begin{minipage}{\textwidth}
+\scriptsize % Tamanho ideal para tabelas densas
+\setlength{\tabcolsep}{4pt} % Aumentamos um pouco o espaçamento já que a tabela tem menos colunas
+% Definimos as 11 colunas da tabela: 3 de configuração + 4 métricas temporais/precisão + 4 índices integrais
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}@{}lllcccccccc@{}}
+\toprule
+% Primeira camada do cabeçalho agrupando as métricas por categoria conceitual
+\textbf{Setpoint} & \textbf{Actuation} & \textbf{Controller} & \multicolumn{4}{c}{\textbf{Temporal metrics}} & \multicolumn{4}{c}{\textbf{Integral Indices}} \\
+\cmidrule(lr){4-7} \cmidrule(lr){8-11}
+% Segunda camada com os identificadores específicos de cada coluna
+& & & $\mathbf{M_p\,(\%)}$ & $\mathbf{t_r\,(\text{s})}$ & $\mathbf{t_s\,(\text{s})}$ & $\mathbf{e_{\text{ss}}\,(^{\circ})}$ & \textbf{IAE} & \textbf{ISE} & \textbf{ITAE} & \textbf{ISSC} \\
+\midrule
+            & Voltage  & PID       & 11,32 & 6,01  & 34,78 & 0,50 & 83,34  & 860,66  & 1361,15 & 1077,17 \\
+$+20^{\circ}$ & Voltage  & Fuzzy-PID & 6,25  & 6,13  & 34,91 & 0,44 & 95,43  & 1014,02 & 1540,62 & 1229,09 \\
+            & Current  & PID       & 4,80  & 10,55 & 31,46 & 0,17 & 121,95 & 1312,82 & 1787,31 & 420,18  \\
+            & Current  & Fuzzy-PID & 3,85  & 7,60  & 28,37 & 0,34 & 86,59  & 790,55  & 1293,62 & 387,40  \\
+\midrule
+            & Voltage  & PID       & 0,41  & 8,62  & 33,33 & 1,31 & 95,07  & 930,59  & 1714,04 & 927,79  \\
+$-20^{\circ}$ & Voltage  & Fuzzy-PID & 3,77  & 7,35  & 38,23 & 1,00 & 112,51 & 1111,36 & 2138,56 & 1152,40 \\
+            & Current  & PID       & 0,50  & 12,79 & 33,08 & 0,23 & 117,62 & 1013,72 & 1862,83 & 283,40  \\
+            & Current  & Fuzzy-PID & 1,62  & 10,42 & 31,05 & 0,36 & 131,05 & 1297,67 & 2346,54 & 597,79  \\
+\botrule
+\end{tabular*}
+\end{minipage}
+\end{center}
+\end{table*}
 
 \subsection{Comparative Analysis and Discussion}
 \label{sub:comparative_discussion}
 
-The joint analysis of the transient tracking profiles exposes significant behavioral divergence between the equivalent voltage and virtual current frameworks. Under both reference polarities, the voltage-driven PID achieved the fastest rise times ($t_r = 4.78\text{ s}$ for $+20^\circ$ and $t_r = 4.51\text{ s}$ for $-20^\circ$), showcasing a highly responsive initial acceleration. However, this snappy behavior comes at the expense of substantial energetic aggression, as evidenced by the high ISSC values ($1571.73$ and $2040.42$, respectively). This high-frequency saturation behavior poses a strict structural demand over the motor-ESC modules.
+The experimental evaluation exposes dynamic and energetic distinctions between the equivalent voltage and estimated current actuation frameworks across both reference directions, under both nominal tracking and perturbed conditions.
 
-Conversely, the current-driven loop attenuates this initial aggressiveness, providing slightly longer rise times but significantly shrinking the global settling time ($t_s$). For instance, under a positive step, the current-driven PID achieved a settling time of $18.54\text{ s}$, a $50.4\%$ reduction compared to the $37.39\text{ s}$ boundary observed in the voltage framework. More importantly, the current-driven framework achieved a drastic mitigation in control energy expenditure, dropping the ISSC to $624.77$ (a $60.2\%$ energy saving). This phenomenon validates that embedding the linear current-to-torque conversion dynamics inside the execution software successfully minimizes the asymmetric thrust saturation caused by aerodynamic variations in the propellers.
+\subsubsection{Nominal Step Reference Response}
+Under disturbance-free step tracking, the voltage-driven PID controller consistently achieved the fastest initial acceleration, yielding the shortest rise times across both reference directions with minimal overshoot and steady-state error. This responsive behavior indicates a faster initial dynamic response associated with direct voltage actuation. However, this rapid start demands severe actuator aggression, resulting in the highest control efforts observed in the entire nominal test. This high energetic activity indicates a more aggressive control action that imposes significant physical demands on the motor-ESC propulsion modules.
 
-The advantages of the proposed virtual current loop become remarkably prominent when paired with the intelligent adaptive Fuzzy-PID controller. For a $+20^\circ$ trajectory, shifting from voltage to current actuation caused the integral criteria to plunge: IAE dropped from $134.32$ to $114.67$, ITAE decreased from $2957.58$ to $2089.93$, and the electrical stress index (ISSC) fell by $66.2\%$, from $1966.19$ down to $663.74$. Symmetrical decoupling is observed for the negative step ($-20^\circ$), where current-loop cascade mapping cut the settling time from $53.74\text{ s}$ to $25.06\text{ s}$ while slashing the energetic effort from $1758.59$ to $775.60$. 
+Conversely, the estimated current loop smooths this initial transient. Although it introduces slightly longer rise times, this framework dramatically optimizes the settling time, most notably for the positive step reference. Concurrently, the electrical stress is drastically attenuated, resulting in a substantial reduction in control energy expenditure. This phenomenon confirms the primary advantage of the current-driven paradigm: by embedding the linear current-to-torque relationship directly within the control software, the system successfully minimizes the non-linearities, saturation effects, and thrust asymmetries typical of commercial propulsion units.
 
-Consequently, the experimental results demonstrate that interpreting the control variable as an estimated armature current consistently delivers superior global damping, transient precision, and electrical stability. Among all analyzed combinations, the current-driven Fuzzy-PID architecture establishes the most effective engineering trade-off between transient response agility and operational power efficiency.
+The advantages of the proposed virtual current loop become even more prominent when paired with the intelligent Fuzzy-PID controller. For the positive step trajectory, shifting from voltage to current actuation causes a drop in all integrated performance and error indices. A similar behavior is observed for the negative step reference, where the current-loop cascade mapping significantly reduces the settling time while slashing the overall energetic effort. These results demonstrate that combining fuzzy logic with a current-driven framework provides a more damped, highly stable, and energy-efficient dynamic response.
+
+\subsubsection{External Disturbance Rejection and Robustness}
+When subjected to external physical disturbances, the current-driven loop demonstrates superior robustness and predictability over the voltage-driven framework, which suffered from high sensitivity and excessive control effort. Under voltage actuation at the positive step reference, the conventional PID reached the highest overshoot of the entire study. Although the Fuzzy-PID controller successfully mitigated this peak, it suffered from degraded integral error indices and a prolonged settling time. 
+
+In contrast, the estimated current loop significantly fortified the system against external impacts. For the positive operating point, the current-driven PID achieved a lower overshoot, a faster settling time, and excellent steady-state precision, while drastically slashing the control effort compared to its voltage counterpart. The absolute best overall performance at this setpoint was achieved by the current-driven Fuzzy-PID, which successfully paired exceptionally low integral error indices with the minimum energetic footprint among all tested configurations, representing superior disturbance rejection and high energy efficiency.
+
+For the negative reference, however, a distinct performance boundary was observed. Here, the current-driven conventional PID achieved the most balanced response, yielding a minimized overshoot, outstanding steady-state accuracy, and the absolute lowest global control effort of all disturbance trials. Conversely, the current-driven Fuzzy-PID experienced a noticeable performance degradation, characterized by a consistent rise in both the integrated error criteria and the energetic effort, alongside a significant increase in the steady-state error. This behavior suggests that for this specific operating zone, the membership functions or rule base of the fuzzy inference system were sub-optimal, leading to control degradation compared to the simpler, conventional PID.
 
 
-\section{Conclusion and future work }\label{sec5}
+\section{Conclusion}\label{sec5}
 
+This paper presented the development of a compact aeropendulum testbed to experimentally evaluate the impact of low-level actuation on aerospace control systems. The primary contribution consisted in comparing a conventional equivalent voltage-driven scheme against a virtual estimated current-loop, under both classical PID and hybrid Fuzzy-PID control.
 
------------ daqui para baixo é do template, não apaguei porque estou usando a estrutura para table and equations ----------
+The nominal experimental trials demonstrated that the proposed virtual current loop successfully linearizes the actuation channel, mitigating the non-linearities and thrust asymmetries characteristic of commercial motor-ESC propulsion units. When subjected to external disturbances, this current-driven paradigm proved robust, maintaining outstanding steady-state precision while drastically reducing control effort. Although the current-driven Fuzzy-PID scheme established the optimal performance-to-energy trade-off at positive operating points, a distinct operational boundary was observed at negative setpoints; in this latter regime, the conventional PID coupled with virtual current actuation emerged as the most balanced and reliable strategy.
+
 
 \backmatter
 
 \bmhead{Supplementary information}
 
-If your article has accompanying supplementary file/s please state so here. 
-
-Authors reporting data from electrophoretic gels and blots should supply the full unprocessed scans for key as part of their Supplementary information. This may be requested by the editorial team/s if it is missing.
-
-Please refer to Journal-level guidance for any specific requirements.
 
 \bmhead{Acknowledgements}
 
-Acknowledgements are not compulsory. Where included they should be brief. Grant or contribution numbers may be acknowledged.
-
-Please refer to Journal-level guidance for any specific requirements.
+?
 
 \section*{Declarations}
 
