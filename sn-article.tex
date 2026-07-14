@@ -41,24 +41,28 @@
 
 %%%% Standard Packages
 %%<additional latex packages if required can be included here>
-\usepackage{subcaption}
 
-
-\usepackage{graphicx}%
-\usepackage{multirow}%
-\usepackage{amsmath,amssymb,amsfonts}%
-\usepackage{amsthm}%
-\usepackage{mathrsfs}%
-\usepackage[title]{appendix}%
-\usepackage{xcolor}%
-\usepackage{textcomp}%
-\usepackage{manyfoot}%
-\usepackage{booktabs}%
-\usepackage{algorithm}%
-\usepackage{algorithmicx}%
-\usepackage{algpseudocode}%
-\usepackage{listings}%
+%%<additional latex packages if required can be included here>
+\usepackage{graphicx}      % Gerenciamento de imagens (carregado primeiro)
+\usepackage{float}         % Permite o uso do [H] para fixar figuras e tabelas
+\usepackage[section]{placeins} % Impede flutuantes de passarem das seções
+\usepackage{subcaption}    % Permite subfiguras (se der erro no seu template, comente esta linha)
+\usepackage{multirow}      % Mesclar linhas em tabelas
+\usepackage{amsmath,amssymb,amsfonts} % Pacotes matemáticos
+\usepackage{amsthm}        % Teoremas matemáticos
+\usepackage{mathrsfs}      % Fontes manuscritas matemáticas
+\usepackage[title]{appendix} % Apêndices
+\usepackage{xcolor}        % Cores no texto
+\usepackage{textcomp}      % Caracteres especiais
+\usepackage{manyfoot}      % Notas de rodapé avançadas
+\usepackage{booktabs}      % Linhas profissionais para tabelas (\toprule, \midrule, \bottomrule)
+\usepackage{algorithm}     % Ambientes de algoritmo
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{listings}      % Inclusão de códigos de programação
 %%%%
+
+
 
 %%%%%=============================================================================%%%%
 %%%%  Remarks: This template is provided to aid authors with the preparation
@@ -124,8 +128,7 @@ Position Control of a Two-Propeller Aeropendulum: A Comparison Between Voltage a
 %% Sample for unstructured abstract %%
 %%==================================%%
 
-\abstract{The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. Authors are advised to check the author instructions for the journal they are submitting to for word limits and if structural elements like subheadings, citations, or equations are permitted.}
-
+\abstract{This paper presents the development and validation of a low-cost twin-rotor aeropendulum testbed to evaluate the impact of low-level actuation on aerospace control systems. Standard brushless propulsion units traditionally drive the plant via voltage signals (PWM), introducing severe dynamic non-linearities and thrust asymmetries. To address this, we propose and compare two low-level frameworks: a conventional equivalent voltage-driven scheme and a software-based virtual estimated current-loop. Both are benchmarked under classical PID and adaptive hybrid Fuzzy-PID controllers. Experimental results show that the virtual current loop successfully linearizes the actuation channel, providing superior dynamic damping and a drastic reduction in the control energy index (ISSC) compared to the voltage scheme. Under external disturbances, the current-driven paradigm demonstrates high robustness and steady-state precision. Furthermore, while the current-driven Fuzzy-PID achieves the best performance-to-energy trade-off at positive setpoints, the conventional PID with virtual current actuation proves to be the most balanced and reliable strategy at negative operating points.}
 %%================================%%
 %% Sample for structured abstract %%
 %%================================%%
@@ -138,7 +141,7 @@ Position Control of a Two-Propeller Aeropendulum: A Comparison Between Voltage a
 % 
 % \textbf{Conclusion:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.}
 
-\keywords{keyword1, Keyword2, Keyword3, Keyword4}
+\keywords{Aeropendulum, Actuation dynamics, Virtual current loop, Fuzzy-PID control, Energy efficiency.}
 
 %%\pacs[JEL Classification]{D8, H51}
 
@@ -381,7 +384,7 @@ Thus, by applying the algebraic difference between the independent actuators, th
 \subsection{Current-Based Actuation Dynamics}
 \label{sub:current_actuation}
 
-Unlike the voltage paradigm where torque coupling is indirect and relies on multi-stage linear approximations—current-based actuation leverages the direct, uncoupled physical relationship between armature current and torque expressed in \eqref{eq:torque_kt}. Actuating the plant via current provides a more linear control loop, as it inherently diminishes the back-electromotive force (Back-EMF) variations and armature resistance thermal dependencies.
+Unlike the voltage paradigm where torque coupling is indirect and relies on multi-stage linear approximations—current-based actuation leverages the direct, uncoupled physical relationship between armature current and torque expressed in Eq. \eqref{eq:torque_kt}. Actuating the plant via current provides a more linear control loop, as it inherently diminishes the back-electromotive force (Back-EMF) variations and armature resistance thermal dependencies.
 
 Since the experimental platform lacks integrated real-time physical current sensors on its embedded hardware, a virtual current sensing loop was developed in software. To establish this sensorless framework, a preliminary steady-state empirical characterization was executed to map the relationship between the applied control variable ($PWM$) and the resulting armature current ($I$). 
 
@@ -472,7 +475,7 @@ Virtual Current      & 0,641 & 0,155 & 0,664 \\
 \subsection{Adaptive Fuzzy-PID Control Design}
 \label{sub:fuzzy_pid}
 
-To enhance tracking robustness against parameter variations and unmodeled non-linear dynamics, an adaptive hybrid Fuzzy-PID controller is synthesized. Unlike classical structures with fixed parameters, the proposed architecture updates the proportional ($K_p$), integral ($K_i$), and derivative ($K_d$) gains in real-time. The block topology uses a Mamdani-type Fuzzy Inference System (FIS) acting as an online tuning mechanism over the nominal parallel baseline gains ($K_{p0}, K_{i0}, K_{d0}$) established in Table~\ref{tab:pid_final_optimized}. 
+To enhance tracking robustness against parameter variations and unmodeled non-linear dynamics, an adaptive hybrid Fuzzy-PID controller is synthesized. Unlike classical structures with fixed parameters, the proposed architecture updates the proportional ($K_p$), integral ($K_i$), and derivative ($K_d$) gains in real-time. The block topology uses a Mamdani-type Fuzzy Inference System (FIS) acting as an online tuning mechanism over the nominal parallel baseline gains ($K_{p0}, K_{i0}, K_{d0}$) established in Table~\ref{tab:pid_zn_base}. 
 
 The real-time adaptation mechanism is mathematically governed by three dimensionless multiplicative scaling vectors ($\alpha_p, \alpha_i, \alpha_d$), defined as follows:
 \begin{equation}
@@ -520,36 +523,38 @@ P & P & Medium & Low & High \\
 
 To balance computational efficiency and smooth interpolation boundaries across the operational space, four-parameter trapezoidal membership functions $\mu(x) = [x_1, x_2, x_3, x_4]$ are implemented for the output channels. The physical constraints and explicit boundary coordinates assigned to each linguistic output region are summarized in Table~\ref{tab:membership_parameters}.
 
-\begin{table*}[t]
-\caption{Membership function coordinates for the fuzzy scaling outputs}\label{tab:membership_parameters}%
-\begin{center}
-\begin{minipage}{\textwidth}
-\footnotesize % Fonte padrão compacta da Springer
-%
-% Usamos tabular* com \textwidth para esticar a tabela por toda a largura útil das duas colunas
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}@{}lll@{}}
+\begin{table}[h]
+\caption{Membership function coordinates for the fuzzy scaling outputs}\label{tab:membership_parameters}
+\begin{minipage}{\columnwidth}
+\footnotesize
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}@{}llc@{}}
 \toprule
-\textbf{Output Factor} & \textbf{Linguistic Region} & \textbf{Numerical Parameters $[x_1; x_2; x_3; x_4]$} \\
+\textbf{Output} & \textbf{Region}\footnote{The abbreviations represent the fuzzy linguistic regions: Low (L), Medium (M), Normal (N), and High (H).} & $\mathbf{[x_1;\, x_2;\, x_3;\, x_4]}$ \\
 \midrule
-                        & Baixo & $[0{,}10;\, 0{,}10;\, 0{,}20;\, 0{,}30]$ \\
-$\alpha_p \in [0;\, 1]$ & Médio & $[0{,}20;\, 0{,}40;\, 0{,}60;\, 0{,}80]$ \\
-                        & Alto  & $[0{,}70;\, 0{,}85;\, 1{,}00;\, 1{,}00]$ \\
+                        & L & $[0.10;\, 0.10;\, 0.20;\, 0.30]$ \\
+$\alpha_p \in [0;\, 1]$ & M & $[0.20;\, 0.40;\, 0.60;\, 0.80]$ \\
+                        & H & $[0.70;\, 0.85;\, 1.00;\, 1.00]$ \\
 \midrule
-                          & Baixo  & $[0{,}30;\, 0{,}50;\, 0{,}60;\, 0{,}80]$ \\
-$\alpha_i \in [0{,}3;\, 1{,}5]$ & Normal & $[0{,}75;\, 0{,}82;\, 1{,}18;\, 1{,}26]$ \\
-                          & Alto   & $[1{,}18;\, 1{,}25;\, 1{,}42;\, 1{,}50]$ \\
+                            & L & $[0.30;\, 0.50;\, 0.60;\, 0.80]$ \\
+$\alpha_i \in [0.3;\, 1.5]$ & N & $[0.75;\, 0.82;\, 1.18;\, 1.26]$ \\
+                            & H & $[1.18;\, 1.25;\, 1.42;\, 1.50]$ \\
 \midrule
-                        & Baixo & $[0{,}095;\, 0{,}171;\, 0{,}280;\, 0{,}370]$ \\
-$\alpha_d \in [0;\, 1]$ & Médio & $[0{,}370;\, 0{,}420;\, 0{,}550;\, 0{,}640]$ \\
-                        & Alto  & $[0{,}640;\, 0{,}710;\, 0{,}820;\, 1{,}000]$ \\
-\botrule
+                        & L & $[0.095;\, 0.171;\, 0.280;\, 0.370]$ \\
+$\alpha_d \in [0;\, 1]$ & M & $[0.370;\, 0.420;\, 0.550;\, 0.640]$ \\
+                        & H & $[0.640;\, 0.710;\, 0.820;\, 1.000]$ \\
+\bottomrule
 \end{tabular*}
 \end{minipage}
-\end{center}
-\end{table*}
+\end{table}
 
 The aggregated fuzzy outputs are mapped back into crisp real-time correction factors using the standard center-of-gravity defuzzification method. This adaptive structure is seamlessly wrapped around both the equivalent voltage distribution loop and the virtual current loop to compare transient performance bounds under identical physical excitations.
 
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.9\textwidth]{DiAGRAMAIC_ingles.eps} % O asterisco faz ocupar as duas colunas e o 0.85 expande o tamanho dela na página
+    \caption{Real-time signal flow and operational block diagram of the embedded control loop execution.}
+    \label{fig:control_flow_diagram}
+\end{figure*}
 
 \section{Experimental Results and Discussion}
 \label{sec:experimental_results}
@@ -563,15 +568,8 @@ The baseline parameters obtained during the simulation stage served as the initi
 
 The discrepancy between simulation and experimental parameters is primarily attributed to the current actuation framework. While the analytical model considers the armature current directly via the torque constant ($K_t$), the physical microprocessor outputs a digital $\text{PWM}$ duty cycle proportional to the estimated variable. To bridge this gap and coordinate the physical experiments, a unified execution architecture was developed within the processing unit. The operational signal flow governing this real-time implementation is mapped in Fig.~\ref{fig:control_flow_diagram}.
 
-\begin{figure*}[htbp]
-    \centering
-    \includegraphics[width=0.85\textwidth]{DiAGRAMAIC_ingles.eps} % O asterisco faz ocupar as duas colunas e o 0.85 expande o tamanho dela na página
-    \caption{Real-time signal flow and operational block diagram of the embedded control loop execution.}
-    \label{fig:control_flow_diagram}
-\end{figure*}
 
 The finalized controller parameters utilized throughout the experimental campaign are consolidated in Table~\ref{tab:experimental_gains}. The heuristic fuzzy rules and output boundaries established in Section 3 remained unaltered, with gain tuning managed in real-time via the developed supervisory graphical user interface.
-
 \begin{table}[h]
 \caption{Final controller parameters applied during the experimental verification}\label{tab:experimental_gains}%
 \begin{center}
@@ -587,46 +585,48 @@ PID -- Voltage Framework          & 5,00 & 10,00 & 0,200 \\
 PID -- Virtual Current Framework  & 0,05 & 0,03  & 0,009 \\
 \botrule
 \end{tabular*}
-\vskip 4pt
-\scriptsize\textbf{Note:} The base scaling parameters ($K_p$, $K_i$, $K_d$) utilized for the adaptive Fuzzy-PID design are equivalent to the fixed gains of the conventional PID frameworks.
+\vskip 3pt
+\scriptsize\textbf{Note:} Base Fuzzy-PID scaling parameters equal the conventional PID gains.
 \end{minipage}
 \end{center}
 \end{table}
 
+
 \subsection{Transient Tracking under Step References ($\pm20^\circ$)}
 \label{sub:step_tracking}
 
-To evaluate the tracking capability and operational symmetry of the architectures, a step reference of $\pm20^\circ$ was injected at $t = 10\text{ s}$ from a steady state of repose. The real-time angular displacement tracking performance horizon is illustrated in Fig.~\ref{fig:angular_displacement_response}. Concurrently, the respective actuator efforts representing the generated control signals are presented in Fig.~\ref{fig:control_signals_response}.
+
+To evaluate the tracking capability and operational symmetry of the architectures, a $\pm20^\circ$ step reference was commanded at $t = 10\text{ s}$ from a steady state of repose. The resulting angular displacement trajectory is illustrated in Fig.~\ref{fig:angular_displacement_response}, while the corresponding control efforts are shown in Fig.~\ref{fig:control_signals_response}. Additionally, Table~\ref{parametros} provides a quantitative comparison of the time-domain performance metrics, steady-state errors, integrated error indices (IAE, ISE, ITAE), and cumulative control efforts (ISSC).
 
 \begin{figure}[htbp]
     \centering
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{posicao_positivo_ingles.eps} % Substitua pelo seu arquivo de +20°
         \caption{Positive step reference ($+20^\circ$).}
         \label{fig:pos_step_20}
     \end{subfigure}
-    \\ \vspace{0.3cm} % Quebra a linha para empilhar e adiciona um pequeno espaço vertical elegante
-    \begin{subfigure}{0.45\textwidth}
+    \\ \vspace{0.2cm} % Quebra a linha para empilhar e adiciona um pequeno espaço vertical elegante
+    \begin{subfigure}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{posicao_negativo_ingles.eps} % Substitua pelo seu arquivo de -20°
         \caption{Negative step reference ($-20^\circ$).}
         \label{fig:neg_step_20}
     \end{subfigure}
-    \caption{Experimental angular displacement tracking performance under positive and negative step references.}
+    \caption{Experimental tracking under step references.}
     \label{fig:angular_displacement_response}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.5\textwidth}
         \centering
         \includegraphics[width=\textwidth]{sinal_controle_positivo_ingles.eps} % Substitua pelo nome do arquivo da sua Figura 42
         \caption{Positive step ($+20^\circ$).}
         \label{fig:control_sig_pos}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.5\textwidth}
         \centering
         \includegraphics[width=\textwidth]{sinal_controle_negativo_ingles.eps} % Substitua pelo nome do arquivo da sua Figura 43
         \caption{Negative step ($-20^\circ$).}
@@ -635,14 +635,13 @@ To evaluate the tracking capability and operational symmetry of the architecture
     \caption{Real-time control effort signals dispatched to the propulsion units under step references.}
     \label{fig:control_signals_response}
 \end{figure}
-To provide a quantitative validation, Table~\ref{parametros} details the time-domain performance metrics and steady-state error alongside the integrated error indices (IAE, ISE, ITAE) and the control effort metric (ISSC).
 
 \begin{table*}[t]
 \caption{Combined transient performance metrics, integrated error indices, and energetic control efforts under step references}\label{tab:performance_metrics_combined}%
 \begin{center}
 \begin{minipage}{\textwidth}
 \scriptsize % Tamanho ideal para tabelas densas de 11 colunas
-\setlength{\tabcolsep}{4pt} % Espaçamento horizontal elegante para 11 colunas
+\setlength{\tabcolsep}{3pt} % Espaçamento horizontal elegante para 11 colunas
 % Definimos as 11 colunas da tabela: 3 de configuração + 4 métricas temporais/precisão + 4 índices integrais
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}@{}lllcccccccc@{}}
 \toprule
@@ -670,46 +669,6 @@ $-20^{\circ}$ & Voltage  & Fuzzy-PID & 2,51 & 7,66 & 53,74 & 1,46 & 127,79 & 120
 
 \subsection{Disturbance Rejection under Step References ($\pm20^\circ$)}
 \label{sub:disturbance_rejection}
-To evaluate the robustness, recovery capability, and disturbance rejection of the proposed control architectures, a step reference of ($\pm20^\circ$) was injected at $t = 10\text{ s}$ from a steady state of repose, followed by the application of an external physical disturbance once the system reached its steady-state operating point. The real-time angular displacement tracking performance under these perturbed conditions is illustrated in Fig.~\ref{fig:disturbance_response}. Concurrently, the respective actuator efforts, representing the generated control signals during the recovery and stabilization process, are presented in Fig.~\ref{fig:disturbance_control_signals}.
-\begin{figure}[htbp]
-    \centering
-    \begin{subfigure}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{posicao_positivo_disturbio_ingles.eps}
-        \caption{Positive step reference ($+20^\circ$) under external disturbance.}
-        \label{fig:pos_step_20_dist}
-    \end{subfigure}
-    \\ \vspace{0.3cm} 
-    \begin{subfigure}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{posicao_negativo_disturbio_ingles.eps}
-        \caption{Negative step reference ($-20^\circ$) under external disturbance.}
-        \label{fig:neg_step_20_dist}
-    \end{subfigure}
-    \caption{Experimental angular displacement tracking performance under positive and negative step references with external disturbances.}
-    \label{fig:disturbance_response}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \begin{subfigure}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{sinal_controle_positivo_disturbio_ingles.eps}
-        \caption{Control effort during positive step ($+20^\circ$) disturbance recovery.}
-        \label{fig:control_sig_pos_dist}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{sinal_controle_negativo_disturbio_ingles.eps}
-        \caption{Control effort during negative step ($-20^\circ$) disturbance recovery.}
-        \label{fig:control_sig_neg_dist}
-    \end{subfigure}
-    \caption{Real-time control effort signals dispatched to the propulsion units during disturbance rejection and recovery.}
-    \label{fig:disturbance_control_signals}
-\end{figure}
-
-To provide a quantitative validation under perturbed conditions, Table~\ref{tab:performance_metrics_disturbance} details the time-domain performance metrics alongside the integrated error indices (IAE, ISE, ITAE) and the energetic control effort (ISSC).
 
 \begin{table*}[t]
 \caption{Combined transient performance metrics, integrated error indices, and energetic control efforts under external disturbance}\label{tab:performance_metrics_disturbance}%
@@ -741,12 +700,55 @@ $-20^{\circ}$ & Voltage  & Fuzzy-PID & 3,77  & 7,35  & 38,23 & 1,00 & 112,51 & 1
 \end{center}
 \end{table*}
 
+The system's resilience and recovery capability were tested by introducing an external physical disturbance after the aeropendulum reached its steady-state operating point. The dynamic angular response under this perturbed condition is captured in Fig.~\ref{fig:disturbance_response}, whereas the control signals dispatched during the stabilization process are detailed in Fig.~\ref{fig:disturbance_control_signals}. To validate these transient behaviors, Table~\ref{tab:performance_metrics_disturbance} consolidates the perturbed performance metrics, error indices, and energetic control expenditures (ISSC).
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{posicao_positivo_disturbio_ingles.eps}
+        \caption{Positive step reference ($+20^\circ$) under external disturbance.}
+        \label{fig:pos_step_20_dist}
+    \end{subfigure}
+    \\ \vspace{0.3cm} 
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{posicao_negativo_disturbio_ingles.eps}
+        \caption{Negative step reference ($-20^\circ$) under external disturbance.}
+        \label{fig:neg_step_20_dist}
+    \end{subfigure}
+    \caption{Experimental angular displacement tracking performance under positive and negative step references with external disturbances.}
+    \label{fig:disturbance_response}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{sinal_controle_positivo_disturbio_ingles.eps}
+        \caption{Control effort during positive step ($+20^\circ$) disturbance recovery.}
+        \label{fig:control_sig_pos_dist}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{sinal_controle_negativo_disturbio_ingles.eps}
+        \caption{Control effort during negative step ($-20^\circ$) disturbance recovery.}
+        \label{fig:control_sig_neg_dist}
+    \end{subfigure}
+    \caption{Real-time control effort signals dispatched to the propulsion units during disturbance rejection and recovery.}
+    \label{fig:disturbance_control_signals}
+\end{figure}
+
+
 \subsection{Comparative Analysis and Discussion}
 \label{sub:comparative_discussion}
 
 The experimental evaluation exposes dynamic and energetic distinctions between the equivalent voltage and estimated current actuation frameworks across both reference directions, under both nominal tracking and perturbed conditions.
 
 \subsubsection{Nominal Step Reference Response}
+
+
 Under disturbance-free step tracking, the voltage-driven PID controller consistently achieved the fastest initial acceleration, yielding the shortest rise times across both reference directions with minimal overshoot and steady-state error. This responsive behavior indicates a faster initial dynamic response associated with direct voltage actuation. However, this rapid start demands severe actuator aggression, resulting in the highest control efforts observed in the entire nominal test. This high energetic activity indicates a more aggressive control action that imposes significant physical demands on the motor-ESC propulsion modules.
 
 Conversely, the estimated current loop smooths this initial transient. Although it introduces slightly longer rise times, this framework dramatically optimizes the settling time, most notably for the positive step reference. Concurrently, the electrical stress is drastically attenuated, resulting in a substantial reduction in control energy expenditure. This phenomenon confirms the primary advantage of the current-driven paradigm: by embedding the linear current-to-torque relationship directly within the control software, the system successfully minimizes the non-linearities, saturation effects, and thrust asymmetries typical of commercial propulsion units.
