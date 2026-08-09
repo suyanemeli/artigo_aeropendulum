@@ -110,26 +110,19 @@ Position Control of a Two-Propeller Aeropendulum: A Comparison Between Voltage a
 %%  \sfx{IV}}\email{iauthor@gmail.com}
 %%=============================================================%%
 
-\author*[1,2]{\fnm{First} \sur{Author}}\email{iauthor@gmail.com}
+\author*[1]{\fnm{Suyane Melissa} \sur{Soares Florencio}}\email{suya1n2e@gmail.com}
 
-\author[2,3]{\fnm{Second} \sur{Author}}\email{iiauthor@gmail.com}
+\author[1]{\fnm{Reinel} \sur{Beltrán Aguedo}}\email{reinel.beltran@ufrpe.br}
 \equalcont{These authors contributed equally to this work.}
-
-\author[1,2]{\fnm{Third} \sur{Author}}\email{iiiauthor@gmail.com}
+\author[1]{\fnm{Ania} \sur{Lussón Cervantes}}\email{ania.lusson@ufrpe.br}
 \equalcont{These authors contributed equally to this work.}
-
-\affil*[1]{\orgdiv{Department}, \orgname{Organization}, \orgaddress{\street{Street}, \city{City}, \postcode{100190}, \state{State}, \country{Country}}}
-
-\affil[2]{\orgdiv{Department}, \orgname{Organization}, \orgaddress{\street{Street}, \city{City}, \postcode{10587}, \state{State}, \country{Country}}}
-
-\affil[3]{\orgdiv{Department}, \orgname{Organization}, \orgaddress{\street{Street}, \city{City}, \postcode{610101}, \state{State}, \country{Country}}}
+\affil*[1]{\orgdiv{Unidade Acadêmica do Cabo de Santo Agostinho (UACSA)}, \orgname{Universidade Federal Rural de Pernambuco (UFRPE)}, \orgaddress{\city{Cabo de Santo Agostinho}, \state{Pernambuco}, \country{Brazil}}}
 
 %%==================================%%
 %% Sample for unstructured abstract %%
 %%==================================%%
 
-\abstract{This paper presents the development and validation of a low-cost twin-rotor aeropendulum testbed to evaluate the impact of low-level actuation on aerospace control systems. Standard brushless propulsion units traditionally drive the plant via voltage signals (PWM), introducing severe dynamic non-linearities and thrust asymmetries. To address this, we propose and compare two low-level frameworks: a conventional equivalent voltage-driven scheme and a software-based virtual estimated current-loop. Both are benchmarked under classical PID and adaptive hybrid Fuzzy-PID controllers. Experimental results show that the virtual current loop successfully linearizes the actuation channel, providing superior dynamic damping and a drastic reduction in the control energy index (ISSC) compared to the voltage scheme. Under external disturbances, the current-driven paradigm demonstrates high robustness and steady-state precision. Furthermore, while the current-driven Fuzzy-PID achieves the best performance-to-energy trade-off at positive setpoints, the conventional PID with virtual current actuation proves to be the most balanced and reliable strategy at negative operating points.}
-%%================================%%
+\abstract{This paper presents the design, modeling, and experimental validation of a low-cost twin-rotor aeropendulum testbed to evaluate the impact of low-level actuation on aerospace control systems. Standard brushless propulsion units traditionally drive the plant via voltage-equivalent signals (PWM), introducing severe dynamic non-linearities and thrust asymmetries. To address these issues, we propose and compare two low-level operational frameworks: a conventional equivalent voltage-driven scheme and a software-based virtual estimated current loop. Both frameworks are benchmarked under classical parallel PID and adaptive hybrid Fuzzy-PID position controllers. Experimental results demonstrate that the virtual current loop successfully linearizes the actuation channel, offering superior dynamic damping and reducing the control energy index (ISSC) by up to 70\% compared to the voltage-driven approach. Under external disturbances, the current-driven paradigm exhibits enhanced rejection capabilities and superior steady-state precision. Furthermore, while the current-driven Fuzzy-PID achieves the best performance-to-energy trade-off for positive setpoints, the conventional PID with virtual current actuation proves to be the most balanced and reliable strategy at negative operating points.}
 %% Sample for structured abstract %%
 %%================================%%
 
@@ -154,27 +147,30 @@ Position Control of a Two-Propeller Aeropendulum: A Comparison Between Voltage a
 Control systems play a central role in the advancement of modern technologies by ensuring precision, stability, and operational efficiency even in the face of disturbances and severe dynamic conditions. However, translating abstract mathematical models encountered in academic settings into real-world solutions requires a rigorous alignment between theory and experimental validation—a connection that characterizes a persistent pedagogical and technical challenge in the development of new technologies. 
 Aiming to mitigate this gap between academia and the practical demands of industry, recent investigations, such as those conducted by \citet{antunes2026improving}, propose restructuring technical learning through methodologies based on practical and interdisciplinary projects. This approach is grounded in the strategic use of didactic platforms and testbeds, which emerge as a fundamental link in control engineering by offering a safe, replicable, and low-cost environment to evaluate the performance of new algorithms before their effective transition to high-complexity applications.
 
-Among the real-world applications requiring this high level of technical rigor, Unmanned Aerial Vehicles (UAVs) stand out. These systems rely heavily on robust control strategies capable of ensuring stability, precise trajectory tracking, and external disturbance rejection. The use of UAVs has expanded significantly across various strategic sectors. In precision agriculture, for instance, these aircraft are utilized for crop monitoring and multispectral analysis to directly assist in decision-making and intelligent crop management \citep{anziliero2021tecnicas}. Similarly, in environmental and industrial monitoring, the integration of onboard sensors and high-resolution cameras contributes to the advancement of autonomous navigation and situational perception of the environment \citep{policarpo2025camera}.
-To enable the autonomy required for these highly complex missions and to ensure aircraft integrity in dynamic operational scenarios, recent literature has focused efforts on advancing high-level control loops for navigation and guidance. In this regard, real-time collision avoidance solutions based on velocity constraints and short-range sensors have been proposed, validated through complex augmented reality setups and motion capture systems \citep{ricardo2024robust}. Similarly, advanced Model Predictive Control (MPC) algorithms structured around zonotopes and LMI matrices are explored to mitigate uncertainties in demanding tasks, such as suspended load transportation, relying on high-fidelity simulations within virtual environments like Gazebo and ROS \citep{andrade2024tube}. Additionally, model-free approaches based on Integral Reinforcement Learning (IRL) have been suggested to coordinate the formation flight of multiple quadrotors, circumventing the severe non-linearities of the system through purely computational validations in the MATLAB environment \citep{dinh2025model}.
-Additionally, to handle actuator faults and environmental disturbances, intelligent strategies based on feedback linearization coupled with adaptive fuzzy logic and sliding mode control (SMC) are designed to guarantee attitude stability \citep{aghazamani2025position}, while novel triple-power reaching laws optimized by particle swarm optimization (PSO) are proposed for fault tolerance in quadrotors \citep{benayad2025hybrid}. However, transposing these investigations directly onto physical aerial platforms imposes severe practical barriers. The imminent risk of crashes, premature wear of electromechanical components, the high cost of tracking infrastructures, and the inherent complexity of implementing high computational-demand algorithms on embedded microcontrollers make direct experimental validation a risky and often unfeasible process for early stages of development.
+Among the real-world applications requiring high technical rigor, Unmanned Aerial Vehicles (UAVs) stand out. These multi-rotor platforms rely on robust control strategies to guarantee flight stability, precise trajectory tracking, and external disturbance rejection across diverse sectors, including precision agriculture \citep{anziliero2021tecnicas} and environmental monitoring \citep{policarpo2025camera}. To advance UAV autonomy, recent literature has focused heavily on high-level navigation and guidance control loops. For instance, real-time collision avoidance strategies using velocity constraints have been validated via augmented reality setups \citep{ricardo2024robust}, tube-based Model Predictive Control (MPC) has been explored for suspended load transportation in ROS/Gazebo environments \citep{andrade2024tube}, and model-free Integral Reinforcement Learning (IRL) has been proposed for multi-quadrotor formation flight \citep{dinh2025model}. Additionally, fuzzy adaptive feedback linearization \citep{aghazamani2025position} and particle swarm optimization-tuned sliding mode control \citep{benayad2025hybrid} have been investigated to handle actuator faults. However, directly evaluating such algorithms on physical aerial platforms presents substantial risks: crash hazards, accelerated electromechanical wear, high cost of motion-capture tracking infrastructure, and embedded microcontroller computational constraints make early-stage experimental testing risky and often unfeasible.
+To overcome these practical constraints, laboratory testbeds provide a strategic alternative for evaluating aerospace dynamics. Among them, the aeropendulum is particularly effective. It consists of a rotational arm constrained to a single degree of freedom driven by a propulsion assembly, faithfully reproducing the fundamental thrust-torque-angle interactions present in rotary-wing aircraft \citep{tanveer2023robust, rojas2024hunting}. Consequently, the aeropendulum enables safe and replicable investigation of stability, transient dynamics, and disturbance rejection.
 
-In light of these limitations, the use of didactic platforms and physical testbeds consolidates itself as a strategic alternative for the practical study of aerospace dynamics, with the aeropendulum standing out among them. This system essentially consists of a rotational arm restricted to a single degree of freedom, driven by a motor-propeller assembly whose dynamics reproduce, in a simplified and faithful manner, the fundamental relationship between thrust, torque, and angular movement present in rotary-wing aircraft \citep{tanveer2023robust, rojas2024hunting}. Thereby, the aeropendulum allows the investigation of critical stability phenomena, transient response, and disturbance rejection within a safe, replicable, and controlled environment.
+However, the practical effectiveness of high-level control algorithms strictly depends on low-level actuator performance. In propulsion systems based on DC or BLDC motors driven by commercial Electronic Speed Controllers (ESCs), the low-level interface typically operates by mapping the control variable into a voltage signal via Pulse-Width Modulation (PWM) \citep{tanveer2023robust, rojas2024hunting}. Although simple to implement, voltage-driven actuation introduces severe non-linearities stemming from back-electromotive force (back-EMF), thermal resistance variations, and rotor static friction deadbands. Because the aerodynamic thrust and torque governing the plant dynamics derive directly from the electromechanical torque, which bears a linear relationship with electrical current rather than voltage, implementing a current control loop emerges as a compelling alternative to linearize the actuation channel and accelerate transient response.
 
-However, the practical effectiveness of any algorithm designed for these platforms strictly depends on how the control action is handled at the lower actuator level. In propulsion systems based on DC or BLDC motors driven by commercial electronic speed controllers (ESCs), the standard low-level command interface traditionally operates by mapping the manipulated variable into a voltage signal via pulse-width modulation (PWM) \citep{tanveer2023robust, rojas2024hunting}. This voltage excitation strategy, although widely adopted due to its simplicity of implementation, introduces severe dynamic non-linearities arising from back-electromotive force, thermal variations in armature resistance, and the deadband behavior imposed by the static friction of the rotor \citep{rafiuddin2023nonlinear}. Since the thrust forces and aerodynamic torques fundamental to the plant's movement derive directly from the electromechanical torque—which bears a purely linear relationship with electrical current, and not with voltage—the imposition of a current control loop emerges as a critical alternative to linearize the actuation channel and accelerate the transient response of the system.
+To bridge this gap, the present work adopts the twin-rotor aeropendulum as an experimental investigation platform. The main contributions of this study are summarized as follows:
 
-Despite these clear physical benefits, experimental research regarding the transition and direct impact between voltage and current actuation paradigms in low-level loops still constitutes a practical gap in the literature of compact aerospace testbeds. To bridge this gap, the present work adopts the aeropendulum as an experimental investigation platform. The primary contribution of this study resides in the development and rigorous comparison between the conventional voltage-oriented loop and a virtual current loop estimated and implemented entirely via software. Both actuation structures are evaluated under the action of a classical PID controller and an intelligent hybrid Fuzzy-PID architecture, clearly mapping the boundaries of energy efficiency and transient robustness of the plant.
+\begin{enumerate}
+    \item Development and experimental characterization of a software-based virtual current-estimation loop for low-cost BLDC propulsion units, eliminating the need for extra physical current sensors;
+    \item Quantitative comparison between equivalent voltage-driven and virtual current-driven paradigms under classical parallel Proportional-Integral-Derivative (PID) and adaptive hybrid Fuzzy-PID architectures;
+    \item Comprehensive experimental validation under setpoint regulation and external disturbance rejection, mapping the energy efficiency (ISSC) and transient stability boundaries of each actuation framework.
+\end{enumerate}
 
+The remainder of this paper is organized as follows: Section~\ref{sec2} details the mathematical dynamics of the twin-rotor aeropendulum. Section~\ref{sec3} presents the experimental setup and parameter identification. Section~\ref{sec4} describes the voltage and current actuation frameworks. Section~\ref{sec5} presents the design of the classical parallel PID and adaptive Fuzzy-PID controllers. Section~\ref{sec6} discusses the experimental results, and Section~\ref{sec7} concludes the paper.
 
 \section{Mathematical modeling}\label{sec2}
 
-The physical structure of the twin-rotor aeropendulum can be conceptually mapped as a pendulum system operating in the vertical plane, where the rod is constrained to a single rotational degree of freedom around a fixed low-friction pivot. To describe its motion, Newton's second law for rotational systems is applied, establishing a direct relationship where the resulting angular acceleration is proportional to the sum of all external torques acting on the pendulum, as expressed in Eq.~\eqref{eq:newton_rotational}:
-
+The twin-rotor aeropendulum is modeled as a single-degree-of-freedom rotational system operating in the vertical plane about a fixed, low-friction pivot. The fundamental physical law governing this motion is Newton's second law for rotation, which establishes that the rate of change of angular momentum of a rigid body is equal to the net external torque applied to the system. In this context, the net external torque represents the algebraic sum of the active aerodynamic thrust generated by the motors, the restoring torque due to gravity, and the resistive damping torque from mechanical friction. This resultant torque is directly proportional to the angular acceleration $\ddot{\theta}(t)$, with the constant of proportionality being the total mass moment of inertia $J$, as expressed in Eq.~\ref{eq:newton_rotational}.
 \begin{equation}
-\sum \tau_i(t) = I_{\text{total}} \alpha(t) = I_{\text{total}} \ddot{\theta}(t)
+\sum \tau_i(t) = J \alpha(t) = J \ddot{\theta}(t)
 \label{eq:newton_rotational}
 \end{equation}
 
-\noindent where $I_{\text{total}}$ represents the total mass moment of inertia of the rigid body about its fixed axis of rotation, and $\alpha(t)$ is the angular acceleration. The term $\ddot{\theta}(t)$ serves as an alternative representation of this same angular acceleration, expressing it mathematically as the second-order derivative of the angular displacement $\theta(t)$ with respect to time ($\ddot{\theta}(t) = \frac{d^2\theta(t)}{dt^2}$), where $\theta(t)$ is the angular displacement relative to the vertical equilibrium position. 
+\noindent where $J$ represents the total mass moment of inertia of the rod-motor assembly about its fixed axis of rotation, and $\alpha(t)$ is the angular acceleration. The term $\ddot{\theta}(t)$ serves as an alternative representation of this same angular acceleration, expressing it mathematically as the second-order derivative of the angular displacement $\theta(t)$ with respect to time ($\ddot{\theta}(t) = \frac{d^2\theta(t)}{dt^2}$), where $\theta(t)$ is the angular displacement relative to the vertical equilibrium position. 
 
 To model the system effectively, these torques are conceptually divided into two distinct components: the passive and the active propulsion. The passive dynamics represent the natural behavior of the standard pendulum, characterized by gravity and friction, which inherently act to restore the system to its equilibrium position or dissipate its energy. Conversely, the active dynamics consist of the propulsion forces generated by the twin rotors, which act as the control input responsible for overcoming these natural restoring forces to drive and manipulate the pendulum's motion.
 
@@ -183,32 +179,31 @@ Consequently, the governing differential equations are derived by first analyzin
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.35\textwidth]{pendulo-ma.eps}
-    \caption{Schematic diagram of the pendulum system.}
+    \caption{Schematic diagram of the aeropendulum  system.}
     \label{fig:aeropendulum_schematic}
 \end{figure}
 
-The structural setup is modeled as a mass $m$ concentrated at the tip of a rigid rod of length $L$, deflected by an angle $\theta$ relative to the vertical equilibrium plane. The gravitational force $F_g = m_{\text{total}}g$ acting on the center of mass is decomposed into two orthogonal components: the radial force $F_{g_{y}} = m_{\text{total}}g\cos\theta$, which acts along the longitudinal axis of the rod and is counterbalanced by the internal structural tension force $T$, and the tangential force $F_{g_{x}} = m_{\text{total}}g\sin\theta$. This tangential component acts perpendicularly to the rod, consistently pulling the system back toward the stable vertical rest position ($\theta = 0^\circ$).
-
+The structural setup is modeled as a mass $m$ concentrated at the tip of a rigid rod of length $L$, deflected by an angular displacement $\theta$ relative to the vertical equilibrium plane, which is induced in the aeropendulum by external forces through the applied force $F_a$. The gravitational force $F_g = m_{\text{total}}g$, where $g$ denotes the acceleration of gravity, acting on the center of mass is decomposed into two orthogonal components: the radial force $F_{g_{y}} = m_{\text{total}}g\cos\theta$, which acts along the longitudinal axis of the rod and is counterbalanced by the internal structural tension force $T$, and the tangential force $F_{g_{x}} = m_{\text{total}}g\sin\theta$. This tangential component acts perpendicularly to the rod, consistently pulling the system back toward the stable vertical rest position ($\theta = 0^\circ$).
 By taking the pivot as the rotational origin and applying the principle of superposition to all coincident perpendicular effects, the dynamic torque balance equation is expressed as:
 
 \begin{equation}
-\tau_{m}(t) + \tau_r(t) + \tau_a(t) = I_{\text{total}} \ddot{\theta}(t)
+\tau_{m}(t) + \tau_r(t) + \tau_a(t) = J \ddot{\theta}(t)
 \label{eq:torque_superposition}
 \end{equation}
 
-\noindent where $\tau_{m}(t)$ represents the active net propulsive torque generated by the twin-propeller assembly at the tip, defined by the operational difference between the front and rear actuators ($\tau_{m}(t) = \tau_{m1}(t) - \tau_{m2}(t)$). The term $\tau_r(t)$ is the gravitational restoring torque directly derived from the tangential force component shown in the schematic diagram, defined as$\tau_r(t) = -LF_{g_x}= -L m_{\text{total}}g\sin\theta(t)$, where the negative sign denotes its restorative nature opposing the angular displacement. Finally, $\tau_a(t)$ is the non-conservative aerodynamic drag torque that models the atmospheric fluid resistance opposing the motion of the rod through the air, given by:
+\noindent where $\tau_{m}(t)$ represents the active net propulsive torque generated by the twin-propeller assembly at the tip, defined by the operational difference between the front and rear actuators ($\tau_{m}(t) = \tau_{m1}(t) - \tau_{m2}(t)$). The term $\tau_r(t)$ is the gravitational restoring torque directly derived from the tangential force component shown in the schematic diagram, defined as $\tau_r(t) = -LF_{g_x}= -L m_{\text{total}}g\sin\theta(t)$, where the negative sign denotes its restorative nature opposing the angular displacement. Finally, $\tau_a(t)$ is the non-conservative aerodynamic drag torque that models the atmospheric fluid resistance opposing the motion of the rod through the air, given by:
 
 \begin{equation}
 \tau_a(t) = -b \dot{\theta}(t)
 \label{eq:damping_torque}
 \end{equation}
 
-\noindent where $b$ denotes the rotational viscous damping coefficient and $\dot{\theta}(t)$ represents the instantaneous angular velocity of the plant.
+\noindent where $b$ denotes the rotational viscous damping coefficient and $\dot{\theta}(t)$ represents the instantaneous angular velocity.
 
-The structural resistance to change in its rotational state, quantified by the total moment of inertia ($I_{\text{total}}$) about the rotation axis, must also be parameterized. This value is determined by combining the continuous mass distribution of the homogeneous rigid rod and the discrete masses of the two actuators located at its tip. Assuming a uniform mass distribution along the rod of length $L$ and mass $m_{\text{haste}}$, and modeling the two BLDC motors as point masses of value $m_{\text{motor}}$ located at a distance $L$ from the pivot, the total equivalent moment of inertia is established via superposition as:
+The structural resistance to change in its rotational state, quantified by the total moment of inertia $J$ about the rotation axis, must also be parameterized. This value is determined by combining the continuous mass distribution of the homogeneous rigid rod and the discrete masses of the two actuators located at its tip. Assuming a uniform mass distribution along the rod of length $L$ and mass $m_{\text{haste}}$, and modeling the two BLDC motors as point masses of value $m_{\text{motor}}$ located at a distance $L$ from the pivot, the total equivalent moment of inertia is established via superposition as:
 
 \begin{equation}
-I_{\text{total}} = L^2 \left( \frac{1}{3}m_{\text{haste}} + 2m_{\text{motor}} \right)
+J = L^2 \left( \frac{1}{3}m_{\text{haste}} + 2m_{\text{motor}} \right)
 \label{eq:i_total}
 \end{equation}
 
@@ -233,7 +228,7 @@ K_g = L m_{\text{total}} g
 Within this context, the simplified representation of the equation can be expressed as in Eq.~\eqref{eq:linear_ode_compact}:
 
 \begin{equation}
-I_{\text{total}} \ddot{\theta}(t) + b \dot{\theta}(t) + K_g \theta(t) = \tau_{m1}(t) - \tau_{m2}(t)
+J \ddot{\theta}(t) + b \dot{\theta}(t) + K_g \theta(t) = \tau_{m1}(t) - \tau_{m2}(t)
 \label{eq:linear_ode_compact}
 \end{equation}
 
@@ -244,7 +239,7 @@ G(s) = \frac{\Theta(s)}{T_{m1}(s) - T_{m2}(s)} = \frac{1}{J s^2 + b s + K_g}
 \label{eq:transfer_function_compact}
 \end{equation}
 
-\section{Experimental platform and parameter identification}
+\section{Experimental platform and parameter identification}\label{sec3}
 
 To evaluate the mathematical formulations and validate the proposed control strategies, a dedicated experimental testbed was developed and utilized in this work. The physical apparatus consists of a twin-rotor aeropendulum framework, illustrated in Fig.~\ref{fig:aeropendulum_combined}, designed for the study and benchmark of non-linear control techniques.
 
@@ -286,7 +281,7 @@ The primary physical and operational characteristics of the embedded subsystems 
 \subsection{System Parameter Identification}
 \label{sub:parameters}
 
-Based on the physical construction and geometric synthesis of the prototype, the core structural and dynamic variables of the system were successfully determined. The mass elements and physical lengths were measured directly from the experimental apparatus, while parameters such as the total mass moment of inertia ($I_{\text{total}}$) and the experimental rotational viscous damping coefficient ($b$) were obtained through analytical formulations and free-oscillation dynamic tests, respectively. 
+Based on the physical construction and geometric synthesis of the prototype, the core structural and dynamic variables of the system were successfully determined. The mass elements and physical lengths were measured directly from the experimental apparatus, while parameters such as the total mass moment of inertia ($J$) and the experimental rotational viscous damping coefficient ($b$) were obtained through analytical formulations and free-oscillation dynamic tests, respectively. 
 
 The complete set of identified physical constants and operational parameters that govern the aeropendulum dynamics is consolidated in Table~\ref{tab:system_parameters}.
 
@@ -300,20 +295,20 @@ The complete set of identified physical constants and operational parameters tha
 \toprule
 \textbf{Parameter} & \textbf{Value} & \textbf{Unit} \\
 \midrule
-Motor mass ($m_1 = m_2$) & 0,052 & kg \\
-Rod mass ($m_{\text{haste}}$) & 0,100 & kg \\
-Total moment of inertia ($I_{\text{total}}$) & 0,0173 & kg$\cdot$m² \\
-Viscous damping coefficient ($b$) & 0,3944 & N$\cdot$m$\cdot$s/rad \\
-Acceleration of gravity ($g$) & 9,8 & m/s² \\
-Rod length ($L$) & 0,36 & m \\
-\botrule
+Motor mass ($m_1 = m_2$) & 0.052 & kg \\
+Rod mass ($m_{\text{haste}}$) & 0.100 & kg \\
+Total moment of inertia ($J$) & 0.0173 & kg$\cdot$m² \\
+Viscous damping coefficient ($b$) & 0.3944 & N$\cdot$m$\cdot$s/rad \\
+Acceleration of gravity ($g$) & 9.8 & m/s² \\
+Rod length ($L$) & 0.36 & m \\
+\botrule        
 \end{tabular*}
 \end{minipage}
 \end{center}
 \end{table}
 
 
-\section{Input signal interpretation and actuation dynamics}\label{sec3}
+\section{Input signal interpretation and actuation dynamics}\label{sec4}
 
 In phenomenological modeling, the input is conventionally defined by the pure net aerodynamic torque developed by the propulsion units. However, from a practical control systems perspective, the actuators cannot be directly driven by a torque command. Instead, they must be excited via voltage or current variables. This section establishes the mathematical and experimental formulations for two distinct actuation paradigms: voltage-based equivalent actuation and estimated current-based actuation. These formulations redefine the open-loop plant inputs, establishing the basis for the comparative analysis.
 
@@ -330,7 +325,7 @@ The operation of Brushless DC (BLDC) motors relies on the electromagnetic intera
 \noindent where $K_t$ is the motor torque constant, which is inversely proportional to the motor velocity constant ($K_v$, specified by the manufacturer as $1000\text{ RPM/V}$ for the actuators utilized in this platform) according to the structural relation:
 
 \begin{equation}
-K_t = \frac{60}{2\pi K_v} \approx 0,00955 \text{ N}\cdot\text{m/A}
+K_t = \frac{60}{2\pi K_v} \approx 0.00955 \text{ N}\text{m/A}
 \label{eq:kt_value}
 \end{equation}
 
@@ -371,8 +366,8 @@ Linear regression algorithms were applied to the experimental curves, mapping th
 \toprule
 Actuator & $K_{f_i} \text{ (A/}^\circ\text{)}$ & $K_{f_v} \text{ (}^\circ\text{/V)}$ & $K_{\text{equivalent}} \text{ (N}{m/V)}$ \\
 \midrule
-Front & 0,053252 & 8,26146 & 0,00420 \\
-Rear  & -0,121940 & -5,11253 & 0,00595 \\
+Front & 0.053252 & 8.26146 & 0.00420 \\
+Rear  & -0.121940 & -5.11253 & 0.00595 \\
 \botrule
 \end{tabular*}
 \end{minipage}
@@ -384,14 +379,14 @@ Thus, by applying the algebraic difference between the independent actuators, th
 \subsection{Current-Based Actuation Dynamics}
 \label{sub:current_actuation}
 
-Unlike the voltage paradigm where torque coupling is indirect and relies on multi-stage linear approximations—current-based actuation leverages the direct, uncoupled physical relationship between armature current and torque expressed in Eq. \eqref{eq:torque_kt}. Actuating the plant via current provides a more linear control loop, as it inherently diminishes the back-electromotive force (Back-EMF) variations and armature resistance thermal dependencies.
+Unlike the voltage paradigm where torque coupling is indirect and relies on multi-stage linear approximations, current-based actuation leverages the direct, uncoupled physical relationship between armature current and torque expressed in Eq. \eqref{eq:torque_kt}. Actuating the plant via current provides a more linear control loop, as it inherently diminishes the back-electromotive force (Back-EMF) variations and armature resistance thermal dependencies.
 
-Since the experimental platform lacks integrated real-time physical current sensors on its embedded hardware, a virtual current sensing loop was developed in software. To establish this sensorless framework, a preliminary steady-state empirical characterization was executed to map the relationship between the applied control variable ($PWM$) and the resulting armature current ($I$). 
+Since the experimental platform lacks integrated real-time physical current sensors on its embedded hardware, a virtual current sensing loop was developed in software. To establish this sensorless framework, a preliminary steady-state empirical characterization was executed to map the relationship between the applied control variable and the resulting armature current. 
 
-Through systematic experimental trials, a mapping was conducted to characterize the relationship between the electrical current consumed and the applied pulse-width modulation (PWM) signal for each propulsion unit. By applying a linear approximation to the gathered experimental steady-state data, this behavior was mathematically modeled as:
+Through systematic experimental trials, a mapping was conducted to characterize the relationship between the electrical current consumed and the applied pulse-width modulation signal for each propulsion unit. By applying a linear approximation to the gathered experimental steady-state data, this behavior was mathematically modeled as:
 
 \begin{equation}
-I(t) = a \cdot PWM(t) + b
+I(t) = a PWM(t) + b
 \label{eq:pwm_current_linear}
 \end{equation}
 
@@ -405,10 +400,10 @@ I(t) = a \cdot PWM(t) + b
 \footnotesize % Reduz a fonte de forma aceita pela Springer
 \begin{tabular*}{\columnwidth}{@{}ll@{}}
 \toprule
-Actuator &  Function $I(t) = a \cdot \text{PWM}(t) + b$ \\
+Actuator &  Function $I(t) = a \text{PWM}(t) + b$ \\
 \midrule
-Front & $I_1(t) = 0.006427 \cdot \text{PWM}_1(t) - 7.139481$ \\
-Rear  & $I_2(t) = 0.007061 \cdot \text{PWM}_2(t) - 7.643550$ \\
+Front & $I_{\text{ref}} = 0.006427 \text{PWM}_1(t) - 7.139481$ \\
+Rear  & $I_{\text{ref}} = 0.007061 \text{PWM}_2(t) - 7.643550$ \\
 \botrule
 \end{tabular*}
 \end{minipage}
@@ -434,24 +429,42 @@ This methodology successfully implements an indirect virtual current loop in sof
 
 
 
-\section{Control system design}\label{sec4}
+\section{Control system design}\label{sec5}
 
-This work proposes and evaluates two distinct control paradigms to regulate the angular position of the twin-rotor aeropendulum: a classical Proportional-Integral-Derivative (PID) controller and an intelligent hybrid Fuzzy-PID controller. Both architectures are independently implemented and compared under both voltage and virtual current actuation frameworks, mapping the performance boundaries of each combination.
+This work proposes and evaluates two distinct control paradigms to regulate the angular position of the twin-rotor aeropendulum: a classical parallel PID controller and an intelligent hybrid Fuzzy-PID controller. Both architectures are independently implemented and compared under both voltage and virtual current actuation frameworks, mapping the performance boundaries of each combination.
 
 \subsection{Classical PID Control Design and Tuning}
 \label{sub:pid_design}
 
-The classical position control loop is structured around a parallel linear PID topology. The synthesis utilizes the open-loop transfer functions derived for current actuation ($G_1(s)$) and voltage actuation ($G_2(s)$), which represent the system's open-loop equations and are expressed as:
+
+\subsection{Classical Parallel PID Controller Synthesis}
+\label{sub:pid_synthesis}
+
+The position control system is structured around a classical parallel PID topology. The controller processes the real-time angular position tracking error $e(t) = \theta_{\text{ref}}(t) - \theta(t)$ to generate a scalar control action $u(t)$. In the Laplace domain, the transfer function of the parallel PID controller $C(s)$ is expressed as:
 
 \begin{equation}
-G_1(s) = \frac{\Theta(s)}{I_{m1}(s) - I_{m2}(s)} = \frac{K_t / I_{\text{total}}}{s^2 + \frac{b}{I_{\text{total}}}s + \frac{K_g}{I_{\text{total}}}}
+C(s) = \frac{U(s)}{E(s)} = K_p + \frac{K_i}{s} + K_d s
+\label{eq:pid_transfer_function}
+\end{equation}
+
+where $K_p$, $K_i$, and $K_d$ represent the proportional, integral, and derivative gains, respectively. The resulting control variable $U(s)$ is dispatched as a differential actuation command between the front (actuator 1) and rear (actuator 2) propulsion units to generate the net propulsive moment required for angular displacement.
+
+The synthesis leverages the open-loop transfer functions derived for current actuation ($G_I(s)$) and equivalent voltage actuation ($G_V(s)$), expressed respectively as:
+
+\begin{equation}
+G_I(s) = \frac{\Theta(s)}{I_{m1}(s) - I_{m2}(s)} = \frac{K_t / J}{s^2 + \frac{b}{J}s + \frac{K_g}{J}}
 \label{eq:tf_current_literal}
 \end{equation}
 
 \begin{equation}
-G_2(s) = \frac{\Theta(s)}{V_1(s) - V_2(s)} = \frac{(K_1 + K_2) / I_{\text{total}}}{s^2 + \frac{b}{I_{\text{total}}}s + \frac{K_g}{I_{\text{total}}}}
+G_V(s) = \frac{\Theta(s)}{V_1(s) - V_2(s)} = \frac{(K_1 + K_2) / J}{s^2 + \frac{b}{J}s + \frac{K_g}{J}}
 \label{eq:tf_voltage_literal}
 \end{equation}
+
+In Eq.~\eqref{eq:tf_current_literal}, the denominator term $\Delta I(s) = I_{m1}(s) - I_{m2}(s)$ represents the net differential armature current between the front ($I_{m1}$) and rear ($I_{m2}$) propulsion units. Because the physical platform lacks embedded hardware current sensors, this differential current command $U(s) = \Delta I(s)$ is synthesized entirely in software.
+
+
+Similarly, in Eq.~\eqref{eq:tf_voltage_literal}, the input term $\Delta V(s) = V_1(s) - V_2(s)$ denotes the net differential equivalent terminal voltage applied to the Electronic Speed Controllers (ESCs). The gain parameters $K_1$ and $K_2$ correspond to the lumped static voltage-to-torque conversion factors ($K_{\text{equivalent},1}$ and $K_{\text{equivalent},2}$) derived from the steady-state characterization ($\tau(t) = K_{\text{equivalent}}V(t)$), effectively mapping the controller output $U(s)$ into duty cycle commands.
 
 The characteristic polynomial of the linearized system yields two distinct, real negative poles. To establish an analytical baseline, the classic open-loop Ziegler–Nichols (ZN) tuning methodology was applied. These initial parameter values, consolidated in Table~\ref{tab:pid_zn_base}, served as the starting baseline configuration evaluated during the preliminary simulation stage.
 
@@ -464,30 +477,30 @@ The characteristic polynomial of the linearized system yields two distinct, real
 \toprule
 \textbf{Control Framework} & $\mathbf{K_p}$ & $\mathbf{K_i}$ & $\mathbf{K_d}$ \\
 \midrule
-Voltage Proportional & 1,495 & 2,889 & 0,129 \\
-Virtual Current      & 0,641 & 0,155 & 0,664 \\
+Voltage Proportional & 1.495 & 2.889 & 0.129 \\
+Virtual Current      & 0.641 & 0.155 & 0.664 \\
 \botrule
 \end{tabular*}
 \end{minipage}
 \end{center}
 \end{table}
 
-\subsection{Adaptive Fuzzy-PID Control Design}
+\subsection{Adaptive Hybrid Fuzzy-PID Control Design}
 \label{sub:fuzzy_pid}
 
 To enhance tracking robustness against parameter variations and unmodeled non-linear dynamics, an adaptive hybrid Fuzzy-PID controller is synthesized. Unlike classical structures with fixed parameters, the proposed architecture updates the proportional ($K_p$), integral ($K_i$), and derivative ($K_d$) gains in real-time. The block topology uses a Mamdani-type Fuzzy Inference System (FIS) acting as an online tuning mechanism over the nominal parallel baseline gains ($K_{p0}, K_{i0}, K_{d0}$) established in Table~\ref{tab:pid_zn_base}. 
 
 The real-time adaptation mechanism is mathematically governed by three dimensionless multiplicative scaling vectors ($\alpha_p, \alpha_i, \alpha_d$), defined as follows:
 \begin{equation}
-K_p(t) = \alpha_p(t) \cdot K_{p0}
+K_p(t) = \alpha_p(t)  K_{p0}
 \label{eq:fuzzy_kp}
 \end{equation}
 \begin{equation}
-K_i(t) = \alpha_i(t) \cdot K_{i0}
+K_i(t) = \alpha_i(t)  K_{i0}
 \label{eq:fuzzy_ki}
 \end{equation}
 \begin{equation}
-K_d(t) = \alpha_d(t) \cdot K_{d0}
+K_d(t) = \alpha_d(t)  K_{d0}
 \label{eq:fuzzy_kd}
 \end{equation}
 
@@ -557,7 +570,7 @@ The aggregated fuzzy outputs are mapped back into crisp real-time correction fac
 \end{figure*}
 
 \section{Experimental Results and Discussion}
-\label{sec:experimental_results}
+\label{sec6}
 
 This section presents the experimental performance analysis of the twin-rotor aeropendulum under four distinct operational conditions angular step references, evaluated both with and without external disturbances. In each scenario, the classical parallel PID and the adaptive hybrid Fuzzy-PID controllers are comprehensively benchmarked under both equivalent voltage and virtual current actuation frameworks. 
 
@@ -581,8 +594,8 @@ The finalized controller parameters utilized throughout the experimental campaig
 \toprule
 \textbf{Controller Architecture} & $\mathbf{K_p}$ & $\mathbf{K_i}$ & $\mathbf{K_d}$ \\
 \midrule
-PID -- Voltage Framework          & 5,00 & 10,00 & 0,200 \\
-PID -- Virtual Current Framework  & 0,05 & 0,03  & 0,009 \\
+PID -- Voltage Framework          & 5.00 & 10.00 & 0.200 \\
+PID -- Virtual Current Framework  & 0.05 & 0.03  & 0.009 \\
 \botrule
 \end{tabular*}
 \vskip 3pt
@@ -651,18 +664,18 @@ To evaluate the tracking capability and operational symmetry of the architecture
 % Segunda camada com os identificadores específicos de cada coluna
 & & & $\mathbf{M_p\,(\%)}$ & $\mathbf{t_r\,(\text{s})}$ & $\mathbf{t_s\,(\text{s})}$ & $\mathbf{e_{\text{ss}}\,(^{\circ})}$ & \textbf{IAE} & \textbf{ISE} & \textbf{ITAE} & \textbf{ISSC} \\
 \midrule
-            & Voltage  & PID       & 0,50 & 4,78 & 37,39 & 0,10 & 66,05  & 746,64  & 940,03  & 1571,73 \\
-$+20^{\circ}$ & Voltage  & Fuzzy-PID & 1,67 & 6,77 & 55,02 & 1,34 & 134,32 & 1263,10 & 2957,58 & 1966,19 \\
-            & Current  & PID       & 1,90 & 6,10 & 18,54 & 0,40 & 79,83  & 845,22  & 1214,70 & 624,77  \\
-            & Current  & Fuzzy-PID & 2,67 & 8,76 & 50,07 & 0,49 & 114,67 & 1104,99 & 2089,93 & 663,74  \\
+            & Voltage  & PID       & 0.50 & 4.78 & 37.39 & 0.10 & 66.05  & 746.64  & 940.03  & 1571.73 \\
+$+20^{\circ}$ & Voltage  & Fuzzy-PID & 1.67 & 6.77 & 55.02 & 1.34 & 134.32 & 1263.10 & 2957.58 & 1966.19 \\
+            & Current  & PID       & 1.90 & 6.10 & 18.54 & 0.40 & 79.83  & 845.22  & 1214.70 & 624.77  \\
+            & Current  & Fuzzy-PID & 2.67 & 8.76 & 50.07 & 0.49 & 114.67 & 1104.99 & 2089.93 & 663.74  \\
 \midrule
-            & Voltage  & PID       & 2,78 & 4,51 & 54,83 & 0,33 & 69,79  & 726,48  & 1288,53 & 2040,42 \\
-$-20^{\circ}$ & Voltage  & Fuzzy-PID & 2,51 & 7,66 & 53,74 & 1,46 & 127,79 & 1201,39 & 2851,11 & 1758,59 \\
-            & Current  & PID       & 2,23 & 7,25 & 40,96 & 0,50 & 81,82  & 705,85  & 1407,05 & 508,89  \\
-            & Current  & Fuzzy-PID & 1,71 & 9,30 & 25,06 & 0,64 & 118,34 & 1070,72 & 2358,39 & 775,60  \\
+            & Voltage  & PID       & 2.78 & 4.51 & 54.83 & 0.33 & 69.79  & 726.48  & 1288.53 & 2040.42 \\
+$-20^{\circ}$ & Voltage  & Fuzzy-PID & 2.51 & 7.66 & 53.74 & 1.46 & 127.79 & 1201.39 & 2851.11 & 1758.59 \\
+            & Current  & PID       & 2.23 & 7.25 & 40.96 & 0.50 & 81.82  & 705.85  & 1407.05 & 508.89  \\
+            & Current  & Fuzzy-PID & 1.71 & 9.30 & 25.06 & 0.64 & 118.34 & 1070.72 & 2358.39 & 775.60  \\
 \botrule
 \label{parametros}
-\end{tabular*}
+\end{tabular*} 
 \end{minipage}
 \end{center}
 \end{table*}
@@ -685,21 +698,21 @@ $-20^{\circ}$ & Voltage  & Fuzzy-PID & 2,51 & 7,66 & 53,74 & 1,46 & 127,79 & 120
 % Segunda camada com os identificadores específicos de cada coluna
 & & & $\mathbf{M_p\,(\%)}$ & $\mathbf{t_r\,(\text{s})}$ & $\mathbf{t_s\,(\text{s})}$ & $\mathbf{e_{\text{ss}}\,(^{\circ})}$ & \textbf{IAE} & \textbf{ISE} & \textbf{ITAE} & \textbf{ISSC} \\
 \midrule
-            & Voltage  & PID       & 11,32 & 6,01  & 34,78 & 0,50 & 83,34  & 860,66  & 1361,15 & 1077,17 \\
-$+20^{\circ}$ & Voltage  & Fuzzy-PID & 6,25  & 6,13  & 34,91 & 0,44 & 95,43  & 1014,02 & 1540,62 & 1229,09 \\
-            & Current  & PID       & 4,80  & 10,55 & 31,46 & 0,17 & 121,95 & 1312,82 & 1787,31 & 420,18  \\
-            & Current  & Fuzzy-PID & 3,85  & 7,60  & 28,37 & 0,34 & 86,59  & 790,55  & 1293,62 & 387,40  \\
+            & Voltage  & PID       & 11.32 & 6.01  & 34.78 & 0.50 & 83.34  & 860.66  & 1361.15 & 1077.17 \\
+$+20^{\circ}$ & Voltage  & Fuzzy-PID & 6.25  & 6.13  & 34.91 & 0.44 & 95.43  & 1014.02 & 1540.62 & 1229.09 \\
+            & Current  & PID       & 4.80  & 10.55 & 31.46 & 0.17 & 121.95 & 1312.82 & 1787.31 & 420.18  \\
+            & Current  & Fuzzy-PID & 3.85  & 7.60  & 28.37 & 0.34 & 86.59  & 790.55  & 1293.62 & 387.40  \\
 \midrule
-            & Voltage  & PID       & 0,41  & 8,62  & 33,33 & 1,31 & 95,07  & 930,59  & 1714,04 & 927,79  \\
-$-20^{\circ}$ & Voltage  & Fuzzy-PID & 3,77  & 7,35  & 38,23 & 1,00 & 112,51 & 1111,36 & 2138,56 & 1152,40 \\
-            & Current  & PID       & 0,50  & 12,79 & 33,08 & 0,23 & 117,62 & 1013,72 & 1862,83 & 283,40  \\
-            & Current  & Fuzzy-PID & 1,62  & 10,42 & 31,05 & 0,36 & 131,05 & 1297,67 & 2346,54 & 597,79  \\
+            & Voltage  & PID       & 0.41  & 8.62  & 33.33 & 1.31 & 95.07  & 930.59  & 1714.04 & 927.79  \\
+$-20^{\circ}$ & Voltage  & Fuzzy-PID & 3.77  & 7.35  & 38.23 & 1.00 & 112.51 & 1111.36 & 2138.56 & 1152.40 \\
+            & Current  & PID       & 0.50  & 12.79 & 33.08 & 0.23 & 117.62 & 1013.72 & 1862.83 & 283.40  \\
+            & Current  & Fuzzy-PID & 1.62  & 10.42 & 31.05 & 0.36 & 131.05 & 1297.67 & 2346.54 & 597.79  \\
 \botrule
 \end{tabular*}
 \end{minipage}
 \end{center}
 \end{table*}
-
+ 
 The system's resilience and recovery capability were tested by introducing an external physical disturbance after the aeropendulum reached its steady-state operating point. The dynamic angular response under this perturbed condition is captured in Fig.~\ref{fig:disturbance_response}, whereas the control signals dispatched during the stabilization process are detailed in Fig.~\ref{fig:disturbance_control_signals}. To validate these transient behaviors, Table~\ref{tab:performance_metrics_disturbance} consolidates the perturbed performance metrics, error indices, and energetic control expenditures (ISSC).
 
 \begin{figure}[h]
@@ -763,7 +776,7 @@ In contrast, the estimated current loop significantly fortified the system again
 For the negative reference, however, a distinct performance boundary was observed. Here, the current-driven conventional PID achieved the most balanced response, yielding a minimized overshoot, outstanding steady-state accuracy, and the absolute lowest global control effort of all disturbance trials. Conversely, the current-driven Fuzzy-PID experienced a noticeable performance degradation, characterized by a consistent rise in both the integrated error criteria and the energetic effort, alongside a significant increase in the steady-state error. This behavior suggests that for this specific operating zone, the membership functions or rule base of the fuzzy inference system were sub-optimal, leading to control degradation compared to the simpler, conventional PID.
 
 
-\section{Conclusion}\label{sec5}
+\section{Conclusion}\label{sec7}
 
 This paper presented the development of a compact aeropendulum testbed to experimentally evaluate the impact of low-level actuation on aerospace control systems. The primary contribution consisted in comparing a conventional equivalent voltage-driven scheme against a virtual estimated current-loop, under both classical PID and hybrid Fuzzy-PID control.
 
